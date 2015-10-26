@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{efe80de7-55d0-4765-9e28-4dd5fd54d315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{046d0a6f-1e9a-4c57-a844-5782559a39e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="msg">
+      <UniqueIdentifier>{ec8cd6fd-fab1-4fbc-b1c2-25b90bb3e190}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\maration-msg\Message.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\android-ifaddrs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Buffer.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\CircleBuffer.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\ClusterSession.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Executor.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\ExecutorManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\ExecutorSession.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\HTTP.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\HTTPHandler.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\HTTPRequest.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\HTTPResponse.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\HTTPRouter.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\HTTPSession.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\json.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Logger.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Macros.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Manager.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\maraton.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Master.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\MasterSession.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\pthread-fixes.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Session.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\SessionFactory.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\SessionManager.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Singleton.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\stdint-msvc2008.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Timer.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\tree.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Types.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\UUID.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-aix.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-bsd.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-darwin.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-errno.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-linux.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\UVSockService.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-sunos.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-threadpool.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-unix.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-version.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\uv-win.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\vld.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\vld_def.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\maraton-include\Zlib.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\maration-msg\Message.cpp">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\ClusterSession.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\Executor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\ExecutorManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\ExecutorSession.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\HTTPHandler.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\HTTPSession.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\Master.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\MasterSession.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\Session.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\SessionFactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\maraton-src\UVSockService.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+</Project>

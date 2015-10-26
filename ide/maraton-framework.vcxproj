@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9EC33A65-4F99-454B-B5F4-CA2698E37021}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>maratonframework</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <ReferencePath>../maraton-lib;$(ReferencePath)</ReferencePath>
+    <IncludePath>D:\Git\maraton-framework\maration-msg;../maraton-include;$(IncludePath)</IncludePath>
+    <LibraryPath>../maraton-lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>../maraton-include;../maration-msg;$(IncludePath)</IncludePath>
+    <ReferencePath>../maration-msg;../maraton-src;$(ReferencePath)</ReferencePath>
+    <LibraryPath>../maraton-lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libuv_x64.lib;advapi32.lib;iphlpapi.lib;psapi.lib;shell32.lib;userenv.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libuv_x64.lib;advapi32.lib;iphlpapi.lib;psapi.lib;shell32.lib;userenv.lib;ws2_32.lib;vld_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\maration-msg\Message.h" />
+    <ClInclude Include="..\maraton-include\android-ifaddrs.h" />
+    <ClInclude Include="..\maraton-include\Buffer.hpp" />
+    <ClInclude Include="..\maraton-include\CircleBuffer.hpp" />
+    <ClInclude Include="..\maraton-include\ClusterSession.h" />
+    <ClInclude Include="..\maraton-include\Executor.h" />
+    <ClInclude Include="..\maraton-include\ExecutorManager.h" />
+    <ClInclude Include="..\maraton-include\ExecutorSession.h" />
+    <ClInclude Include="..\maraton-include\HTTP.h" />
+    <ClInclude Include="..\maraton-include\HTTPHandler.h" />
+    <ClInclude Include="..\maraton-include\HTTPRequest.hpp" />
+    <ClInclude Include="..\maraton-include\HTTPResponse.hpp" />
+    <ClInclude Include="..\maraton-include\HTTPRouter.hpp" />
+    <ClInclude Include="..\maraton-include\HTTPSession.h" />
+    <ClInclude Include="..\maraton-include\json.hpp" />
+    <ClInclude Include="..\maraton-include\Logger.hpp" />
+    <ClInclude Include="..\maraton-include\Macros.h" />
+    <ClInclude Include="..\maraton-include\Manager.hpp" />
+    <ClInclude Include="..\maraton-include\maraton.h" />
+    <ClInclude Include="..\maraton-include\Master.h" />
+    <ClInclude Include="..\maraton-include\MasterSession.h" />
+    <ClInclude Include="..\maraton-include\pthread-fixes.h" />
+    <ClInclude Include="..\maraton-include\Session.h" />
+    <ClInclude Include="..\maraton-include\SessionFactory.h" />
+    <ClInclude Include="..\maraton-include\SessionManager.hpp" />
+    <ClInclude Include="..\maraton-include\Singleton.hpp" />
+    <ClInclude Include="..\maraton-include\stdint-msvc2008.h" />
+    <ClInclude Include="..\maraton-include\Timer.hpp" />
+    <ClInclude Include="..\maraton-include\tree.h" />
+    <ClInclude Include="..\maraton-include\Types.h" />
+    <ClInclude Include="..\maraton-include\UUID.hpp" />
+    <ClInclude Include="..\maraton-include\uv-aix.h" />
+    <ClInclude Include="..\maraton-include\uv-bsd.h" />
+    <ClInclude Include="..\maraton-include\uv-darwin.h" />
+    <ClInclude Include="..\maraton-include\uv-errno.h" />
+    <ClInclude Include="..\maraton-include\uv-linux.h" />
+    <ClInclude Include="..\maraton-include\uv-sunos.h" />
+    <ClInclude Include="..\maraton-include\uv-threadpool.h" />
+    <ClInclude Include="..\maraton-include\uv-unix.h" />
+    <ClInclude Include="..\maraton-include\uv-version.h" />
+    <ClInclude Include="..\maraton-include\uv-win.h" />
+    <ClInclude Include="..\maraton-include\uv.h" />
+    <ClInclude Include="..\maraton-include\UVSockService.h" />
+    <ClInclude Include="..\maraton-include\vld.h" />
+    <ClInclude Include="..\maraton-include\vld_def.h" />
+    <ClInclude Include="..\maraton-include\Zlib.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\maration-msg\Message.cpp" />
+    <ClCompile Include="..\maraton-src\ClusterSession.cpp" />
+    <ClCompile Include="..\maraton-src\Executor.cpp" />
+    <ClCompile Include="..\maraton-src\ExecutorManager.cpp" />
+    <ClCompile Include="..\maraton-src\ExecutorSession.cpp" />
+    <ClCompile Include="..\maraton-src\HTTPHandler.cpp" />
+    <ClCompile Include="..\maraton-src\HTTPSession.cpp" />
+    <ClCompile Include="..\maraton-src\Master.cpp" />
+    <ClCompile Include="..\maraton-src\MasterSession.cpp" />
+    <ClCompile Include="..\maraton-src\Session.cpp" />
+    <ClCompile Include="..\maraton-src\SessionFactory.cpp" />
+    <ClCompile Include="..\maraton-src\UVSockService.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
