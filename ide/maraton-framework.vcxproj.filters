@@ -81,9 +81,6 @@
     <ClInclude Include="..\maraton-include\Session.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\maraton-include\SessionFactory.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\maraton-include\SessionManager.hpp">
       <Filter>include</Filter>
     </ClInclude>
@@ -180,9 +177,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\maraton-src\Session.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\maraton-src\SessionFactory.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\maraton-src\UVSockService.cpp">

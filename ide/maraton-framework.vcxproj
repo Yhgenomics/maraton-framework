@@ -173,7 +173,6 @@
     <ClInclude Include="..\maraton-include\MasterSession.h" />
     <ClInclude Include="..\maraton-include\pthread-fixes.h" />
     <ClInclude Include="..\maraton-include\Session.h" />
-    <ClInclude Include="..\maraton-include\SessionFactory.h" />
     <ClInclude Include="..\maraton-include\SessionManager.hpp" />
     <ClInclude Include="..\maraton-include\Singleton.hpp" />
     <ClInclude Include="..\maraton-include\stdint-msvc2008.h" />
@@ -208,7 +207,6 @@
     <ClCompile Include="..\maraton-src\Master.cpp" />
     <ClCompile Include="..\maraton-src\MasterSession.cpp" />
     <ClCompile Include="..\maraton-src\Session.cpp" />
-    <ClCompile Include="..\maraton-src\SessionFactory.cpp" />
     <ClCompile Include="..\maraton-src\UVSockService.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

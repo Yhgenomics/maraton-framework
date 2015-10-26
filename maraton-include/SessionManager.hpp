@@ -22,17 +22,7 @@ class SessionManager :
 public:
 
     typedef std::function<void( TT* )> callback_t;
-
-    void run()
-    {
-        auto elements = Manager<TT>::instances();
-        for ( auto s : elements )
-        {
-            auto session = static_cast< Session* >( s );
-            session->run();
-        }
-    };
-        
+     
     TT* create( uv_tcp_t* conn )
     {
         TT* t = new TT( conn );
