@@ -25,8 +25,7 @@ public:
     void status( int status ) { status_ = status; };
     int status() { return status_; };
 
-    void content_type( std::string type ) { content_type_ = type; };
-    std::string content_type() { return content_type_; };
+    void content_type( std::string type ) { header( "Content-Type", type ); };//content_type_ = type; };
 
     void header( std::string name, std::string value )
     {
