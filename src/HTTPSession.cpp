@@ -13,7 +13,6 @@ HTTPSession::HTTPSession( uv_tcp_t* conn )
             this->close();
         }
     );
-    //printf( "Session[%d] incoming request...\r\n", this->id() );*/
 }              
 
 HTTPSession::~HTTPSession()
