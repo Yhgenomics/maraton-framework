@@ -23,7 +23,8 @@ Message::Message( const std::string version, size_t command, size_t status )
 
 Message::Message( Message & message )
 {
-    this->raw_data_.parse( message.raw_data_.dump() );
+    std::string str = message.raw_data_.dump();
+    this->raw_data_.parse( str );
     this->command_ = message.command_;
     this->status_ = message.status_;
     this->owner_ = message.owner_;
@@ -44,7 +45,8 @@ Message::Message( Message && message )
 
 Message& Message::operator=( Message & message )
 {
-    this->raw_data_ = message.raw_data_;
+    std::string str = message.raw_data_;
+    this->raw_data_.parse( str );
     this->command_ = message.command_;
     this->status_ = message.status_;
     this->owner_ = message.owner_;
@@ -70,7 +72,7 @@ Message & Message::operator=( Message && message )
 Buffer Message::bytes()
 {
     Buffer buffer;
-    auto json = this->raw_data_.dump();
+    std::string json = this->raw_data_.dump();
     buffer.raw( json.c_str(), static_cast< int >( json.length() ) + 1 );
 
     return buffer;

@@ -50,7 +50,7 @@ protected:
 
     ClusterSession* owner_ = nullptr;
 
-    nlohmann::basic_json<> raw_data_;
+    nlohmann::json raw_data_;
 
 };
 
