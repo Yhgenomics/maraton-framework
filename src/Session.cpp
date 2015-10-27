@@ -39,13 +39,13 @@ void Session::send( const char * data, int len )
     int result = 1;
     while ( result )
     {
-        result = uv_write( write_req_, ( uv_stream_t* )this->conn_, &p_buf, 1 , Core::UVSockService::uv_write_cb_process );
+        result = uv_write( write_req_, ( uv_stream_t* )this->conn_, &p_buf, 1 , UVSockService::uv_write_cb_process );
     }
 }
 
 void Session::close()
 {
-    uv_close( (uv_handle_t*)this->conn_, Core::UVSockService::uv_close_cb_process );
+    uv_close( (uv_handle_t*)this->conn_, UVSockService::uv_close_cb_process );
 }
 
 int Session::create_session_id()

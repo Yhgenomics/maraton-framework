@@ -4,19 +4,19 @@
 #include "MasterSession.h"
 #include "HTTPSession.h"
 
-Core::UVSockService::UVSockService()
+UVSockService::UVSockService()
 {
     this->loop_ = nullptr;
     this->socket_ = nullptr;
 }
 
-Core::UVSockService::~UVSockService()
+UVSockService::~UVSockService()
 {
     SAFE_DELETE( this->socket_ );
     SAFE_DELETE( this->loop_ );
 }
 
-bool Core::UVSockService::listen( std::string ip, int port )
+bool UVSockService::listen( std::string ip, int port )
 {
     this->loop_ = uv_default_loop(); 
     auto socket_ = new uv_tcp_t();
@@ -27,7 +27,7 @@ bool Core::UVSockService::listen( std::string ip, int port )
     uv_tcp_bind( socket_, ( const struct sockaddr* )&addr_in, 0 );
     int result = uv_listen( ( uv_stream_t* )socket_, 
                        10000, 
-                       Core::UVSockService::uv_connection_cb_process );
+                       UVSockService::uv_connection_cb_process );
 
     listen_data* data = new listen_data();
 
@@ -48,7 +48,7 @@ bool Core::UVSockService::listen( std::string ip, int port )
     return true;
 }
 
-bool Core::UVSockService::connect( std::string ip, int port )
+bool UVSockService::connect( std::string ip, int port )
 {
     this->loop_ = uv_default_loop();
     auto socket_ = new uv_tcp_t();
@@ -67,22 +67,22 @@ bool Core::UVSockService::connect( std::string ip, int port )
     auto result = uv_tcp_connect( 
         connect, socket_, 
         ( const struct sockaddr* )&addr_in, 
-        Core::UVSockService::uv_connected_cb_process );
+        UVSockService::uv_connected_cb_process );
 
     return true;
 }
 
-void Core::UVSockService::run()
+void UVSockService::run()
 { 
     uv_run( this->loop_, UV_RUN_DEFAULT );
 }
 
-uv_loop_t * Core::UVSockService::loop()
+uv_loop_t * UVSockService::loop()
 {
     return uv_default_loop();
 }
 
-void Core::UVSockService::uv_connection_cb_process( uv_stream_t * server, int status )
+void UVSockService::uv_connection_cb_process( uv_stream_t * server, int status )
 {
     if ( status < 0 )
     {
@@ -122,18 +122,18 @@ void Core::UVSockService::uv_connection_cb_process( uv_stream_t * server, int st
         client->data = static_cast< void* >( session );
 
         uv_read_start( ( uv_stream_t* ) client,
-                       Core::UVSockService::uv_alloc_cb_process,
-                       Core::UVSockService::uv_read_cb_process );
+                       UVSockService::uv_alloc_cb_process,
+                       UVSockService::uv_read_cb_process );
 
     }
     else 
     {
-        uv_close( ( uv_handle_t* ) client, Core::UVSockService::uv_close_cb_process );
+        uv_close( ( uv_handle_t* ) client, UVSockService::uv_close_cb_process );
     }
 
 }
 
-void Core::UVSockService::uv_connected_cb_process( uv_connect_t * req, int status )
+void UVSockService::uv_connected_cb_process( uv_connect_t * req, int status )
 { 
     if ( status < 0 )
     {
@@ -158,12 +158,12 @@ void Core::UVSockService::uv_connected_cb_process( uv_connect_t * req, int statu
     client->data = session;
 
     uv_read_start( ( uv_stream_t* ) client,
-                   Core::UVSockService::uv_alloc_cb_process,
-                   Core::UVSockService::uv_read_cb_process );
+                   UVSockService::uv_alloc_cb_process,
+                   UVSockService::uv_read_cb_process );
 
 }
 
-void Core::UVSockService::uv_alloc_cb_process( uv_handle_t * handle, size_t suggested_size, uv_buf_t * buf )
+void UVSockService::uv_alloc_cb_process( uv_handle_t * handle, size_t suggested_size, uv_buf_t * buf )
 {
     Session* session = static_cast< Session* >( handle->data );
 
@@ -171,7 +171,7 @@ void Core::UVSockService::uv_alloc_cb_process( uv_handle_t * handle, size_t sugg
     buf->len = session->buffer_len();
 }
 
-void Core::UVSockService::uv_read_cb_process( uv_stream_t * stream, ssize_t nread, const uv_buf_t * buf )
+void UVSockService::uv_read_cb_process( uv_stream_t * stream, ssize_t nread, const uv_buf_t * buf )
 {
     Session* session = static_cast< Session* >( stream->data );
 
@@ -186,7 +186,7 @@ void Core::UVSockService::uv_read_cb_process( uv_stream_t * stream, ssize_t nrea
     session->recv( buf->base, static_cast< int >( nread ) );
 }
 
-void Core::UVSockService::uv_close_cb_process( uv_handle_t * handle )
+void UVSockService::uv_close_cb_process( uv_handle_t * handle )
 {
     Session* session = static_cast< Session* >( handle->data );
     handle->data = nullptr;
@@ -196,7 +196,7 @@ void Core::UVSockService::uv_close_cb_process( uv_handle_t * handle )
     SAFE_DELETE( session );
 }
 
-void Core::UVSockService::uv_write_cb_process( uv_write_t * req, int status )
+void UVSockService::uv_write_cb_process( uv_write_t * req, int status )
 {
     if ( status < 0 )
     {   

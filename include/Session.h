@@ -21,10 +21,7 @@ enum SESSIONTYPE
     EXECUTOR = 90
 };
 
-namespace Core
-{
-    class UVSockService;
-}
+class UVSockService;
 
 class Session
 {
@@ -57,7 +54,7 @@ protected:
 
 private:
 
-    friend Core::UVSockService; 
+    friend UVSockService; 
 
     int id_;
 };
