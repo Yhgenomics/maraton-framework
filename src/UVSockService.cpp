@@ -183,7 +183,7 @@ void Core::UVSockService::uv_read_cb_process( uv_stream_t * stream, ssize_t nrea
         return;
     }
     
-    session->on_recv( buf->base, static_cast< int >( nread ) );
+    session->recv( buf->base, static_cast< int >( nread ) );
 }
 
 void Core::UVSockService::uv_close_cb_process( uv_handle_t * handle )

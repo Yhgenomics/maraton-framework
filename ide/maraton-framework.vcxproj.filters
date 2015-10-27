@@ -7,9 +7,6 @@
     <Filter Include="src">
       <UniqueIdentifier>{046d0a6f-1e9a-4c57-a844-5782559a39e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="msg">
-      <UniqueIdentifier>{ec8cd6fd-fab1-4fbc-b1c2-25b90bb3e190}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\android-ifaddrs.h">
@@ -135,119 +132,11 @@
     <ClInclude Include="..\include\Zlib.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\msg\Message.h">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageAbilityQuery.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageAbilityQueryACK.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageAbilityQueryACKHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageAbilityQueryHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageExceptionReport.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageExceptionReportHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageGreeting.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageGreetingHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageHeartBeat.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageHeartBeatHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageIntro.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageIntroHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageResourcesQuery.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageResourcesQueryACK.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageResourcesQueryACKHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageResourcesQueryHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessagesHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageStatusReport.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageStatusReportHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskCancel.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskCancelHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskContinue.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskContinueHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskDeliver.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskDeliverACK.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskDeliverACKHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskDeliverHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskPause.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskPauseHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskQuery.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskQueryACK.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskQueryACKHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskQueryHandler.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskRestart.hpp">
-      <Filter>msg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\msg\MessageTaskRestartHandler.hpp">
-      <Filter>msg</Filter>
+    <ClInclude Include="..\include\Message.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\msg\Message.cpp">
-      <Filter>msg</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\ClusterSession.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -267,6 +156,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\UVSockService.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Message.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,11 +4,15 @@
 #include "maraton.h"
 #include "Session.h"
 #include "Message.h"
+#include <vector>
+#include <functional>
 
 class ClusterSession :
     public Session
 {
 public:
+
+    typedef std::function<void( Message* )> callback_t;
 
     ClusterSession( uv_tcp_t* conn );
     virtual ~ClusterSession() override;
@@ -17,9 +21,10 @@ public:
 
 protected:
 
-    void on_recv( const char* data, int len ) override;
+    void recv( const char* data, int len ) override;
     void send( const char* data, int len ) override;
     virtual void message( Message* message ) = 0;
+    virtual void on_message( callback_t callback );
 
 private:
 
@@ -43,6 +48,7 @@ private:
     bool try_read_body();
     void invoke_message( std::string json );
 
+    std::vector<callback_t> callback_list;
 };
 
 #endif // !CLUSTER_SESSION_H_

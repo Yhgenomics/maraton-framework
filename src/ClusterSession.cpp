@@ -10,7 +10,7 @@ ClusterSession::~ClusterSession()
 {
 }
 
-void ClusterSession::on_recv( const char* data, int len )
+void ClusterSession::recv( const char* data, int len )
 {
     circle_buffer_.push( data, len );
     do
@@ -90,11 +90,17 @@ void ClusterSession::send( const char * data, int len )
 
     SAFE_DELETE( package );
 }
+
+void ClusterSession::on_message( callback_t callback )
+{
+    callback_list.push_back( callback );
+}
  
 void ClusterSession::send( Message * message )
 {
     auto buf = message->bytes();
     this->send( buf.raw(), buf.length() );
+     
 }
 
 bool ClusterSession::try_read_flag()
@@ -157,4 +163,9 @@ void ClusterSession::invoke_message( std::string json )
     Message message( json );
     message.owner( this );
     this->message( &message );
+
+    for ( auto cb : callback_list )
+    {
+        cb( &message );
+    }
 }

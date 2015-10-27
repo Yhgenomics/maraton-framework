@@ -21,7 +21,7 @@ HTTPSession::~HTTPSession()
     SAFE_DELETE( this->handler );
 }
 
-void HTTPSession::on_recv( const char* data, int len )
+void HTTPSession::recv( const char* data, int len )
 {
     handler->router()->parse( data, len );
 } 

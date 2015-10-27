@@ -19,7 +19,7 @@ public:
     HTTPSession( uv_tcp_t* conn );
     virtual ~HTTPSession() override;
      
-    virtual void on_recv(const char* data, int len ) override;
+    virtual void recv(const char* data, int len ) override;
 
 private:
 

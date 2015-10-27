@@ -41,7 +41,7 @@ public:
 
 protected:
 
-    virtual void on_recv( const char* data, int len ) = 0;
+    virtual void recv( const char* data, int len ) = 0;
     virtual void send( const char* data, int len );
     virtual void shutdown() {};
     

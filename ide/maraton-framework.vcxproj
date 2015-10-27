@@ -36,6 +36,7 @@
     <ClInclude Include="..\include\Manager.hpp" />
     <ClInclude Include="..\include\maraton.h" />
     <ClInclude Include="..\include\MasterSession.h" />
+    <ClInclude Include="..\include\Message.h" />
     <ClInclude Include="..\include\pthread-fixes.h" />
     <ClInclude Include="..\include\Session.h" />
     <ClInclude Include="..\include\SessionManager.hpp" />
@@ -60,50 +61,14 @@
     <ClInclude Include="..\include\vld.h" />
     <ClInclude Include="..\include\vld_def.h" />
     <ClInclude Include="..\include\Zlib.hpp" />
-    <ClInclude Include="..\msg\Message.h" />
-    <ClInclude Include="..\msg\MessageAbilityQuery.hpp" />
-    <ClInclude Include="..\msg\MessageAbilityQueryACK.hpp" />
-    <ClInclude Include="..\msg\MessageAbilityQueryACKHandler.hpp" />
-    <ClInclude Include="..\msg\MessageAbilityQueryHandler.hpp" />
-    <ClInclude Include="..\msg\MessageExceptionReport.hpp" />
-    <ClInclude Include="..\msg\MessageExceptionReportHandler.hpp" />
-    <ClInclude Include="..\msg\MessageGreeting.hpp" />
-    <ClInclude Include="..\msg\MessageGreetingHandler.hpp" />
-    <ClInclude Include="..\msg\MessageHeartBeat.hpp" />
-    <ClInclude Include="..\msg\MessageHeartBeatHandler.hpp" />
-    <ClInclude Include="..\msg\MessageIntro.hpp" />
-    <ClInclude Include="..\msg\MessageIntroHandler.hpp" />
-    <ClInclude Include="..\msg\MessageResourcesQuery.hpp" />
-    <ClInclude Include="..\msg\MessageResourcesQueryACK.hpp" />
-    <ClInclude Include="..\msg\MessageResourcesQueryACKHandler.hpp" />
-    <ClInclude Include="..\msg\MessageResourcesQueryHandler.hpp" />
-    <ClInclude Include="..\msg\MessagesHandler.hpp" />
-    <ClInclude Include="..\msg\MessageStatusReport.hpp" />
-    <ClInclude Include="..\msg\MessageStatusReportHandler.hpp" />
-    <ClInclude Include="..\msg\MessageTaskCancel.hpp" />
-    <ClInclude Include="..\msg\MessageTaskCancelHandler.hpp" />
-    <ClInclude Include="..\msg\MessageTaskContinue.hpp" />
-    <ClInclude Include="..\msg\MessageTaskContinueHandler.hpp" />
-    <ClInclude Include="..\msg\MessageTaskDeliver.hpp" />
-    <ClInclude Include="..\msg\MessageTaskDeliverACK.hpp" />
-    <ClInclude Include="..\msg\MessageTaskDeliverACKHandler.hpp" />
-    <ClInclude Include="..\msg\MessageTaskDeliverHandler.hpp" />
-    <ClInclude Include="..\msg\MessageTaskPause.hpp" />
-    <ClInclude Include="..\msg\MessageTaskPauseHandler.hpp" />
-    <ClInclude Include="..\msg\MessageTaskQuery.hpp" />
-    <ClInclude Include="..\msg\MessageTaskQueryACK.hpp" />
-    <ClInclude Include="..\msg\MessageTaskQueryACKHandler.hpp" />
-    <ClInclude Include="..\msg\MessageTaskQueryHandler.hpp" />
-    <ClInclude Include="..\msg\MessageTaskRestart.hpp" />
-    <ClInclude Include="..\msg\MessageTaskRestartHandler.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\msg\Message.cpp" />
     <ClCompile Include="..\src\ClusterSession.cpp" />
     <ClCompile Include="..\src\ExecutorSession.cpp" />
     <ClCompile Include="..\src\HTTPHandler.cpp" />
     <ClCompile Include="..\src\HTTPSession.cpp" />
     <ClCompile Include="..\src\MasterSession.cpp" />
+    <ClCompile Include="..\src\Message.cpp" />
     <ClCompile Include="..\src\Session.cpp" />
     <ClCompile Include="..\src\UVSockService.cpp" />
   </ItemGroup>
@@ -128,7 +93,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
