@@ -18,7 +18,6 @@ ExecutorSession::~ExecutorSession()
 
 void ExecutorSession::message( Message * message )
 {
-    printf( "Session[%d] Command:%d\r\n", this->id(), message->command() );
 }
 
 void ExecutorSession::shutdown()

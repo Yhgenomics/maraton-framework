@@ -18,6 +18,66 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\android-ifaddrs.h" />
+    <ClInclude Include="..\include\Buffer.hpp" />
+    <ClInclude Include="..\include\CircleBuffer.hpp" />
+    <ClInclude Include="..\include\ClusterSession.h" />
+    <ClInclude Include="..\include\Executor.h" />
+    <ClInclude Include="..\include\ExecutorManager.h" />
+    <ClInclude Include="..\include\ExecutorSession.h" />
+    <ClInclude Include="..\include\HTTP.h" />
+    <ClInclude Include="..\include\HTTPHandler.h" />
+    <ClInclude Include="..\include\HTTPRequest.hpp" />
+    <ClInclude Include="..\include\HTTPResponse.hpp" />
+    <ClInclude Include="..\include\HTTPRouter.hpp" />
+    <ClInclude Include="..\include\HTTPSession.h" />
+    <ClInclude Include="..\include\json.hpp" />
+    <ClInclude Include="..\include\Logger.hpp" />
+    <ClInclude Include="..\include\Macros.h" />
+    <ClInclude Include="..\include\Manager.hpp" />
+    <ClInclude Include="..\include\maraton.h" />
+    <ClInclude Include="..\include\Master.h" />
+    <ClInclude Include="..\include\MasterSession.h" />
+    <ClInclude Include="..\include\pthread-fixes.h" />
+    <ClInclude Include="..\include\Session.h" />
+    <ClInclude Include="..\include\SessionManager.hpp" />
+    <ClInclude Include="..\include\Singleton.hpp" />
+    <ClInclude Include="..\include\stdint-msvc2008.h" />
+    <ClInclude Include="..\include\Timer.hpp" />
+    <ClInclude Include="..\include\tree.h" />
+    <ClInclude Include="..\include\Types.h" />
+    <ClInclude Include="..\include\UUID.hpp" />
+    <ClInclude Include="..\include\uv-aix.h" />
+    <ClInclude Include="..\include\uv-bsd.h" />
+    <ClInclude Include="..\include\uv-darwin.h" />
+    <ClInclude Include="..\include\uv-errno.h" />
+    <ClInclude Include="..\include\uv-linux.h" />
+    <ClInclude Include="..\include\uv-sunos.h" />
+    <ClInclude Include="..\include\uv-threadpool.h" />
+    <ClInclude Include="..\include\uv-unix.h" />
+    <ClInclude Include="..\include\uv-version.h" />
+    <ClInclude Include="..\include\uv-win.h" />
+    <ClInclude Include="..\include\uv.h" />
+    <ClInclude Include="..\include\UVSockService.h" />
+    <ClInclude Include="..\include\vld.h" />
+    <ClInclude Include="..\include\vld_def.h" />
+    <ClInclude Include="..\include\Zlib.hpp" />
+    <ClInclude Include="..\msg\Message.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\msg\Message.cpp" />
+    <ClCompile Include="..\src\ClusterSession.cpp" />
+    <ClCompile Include="..\src\Executor.cpp" />
+    <ClCompile Include="..\src\ExecutorManager.cpp" />
+    <ClCompile Include="..\src\ExecutorSession.cpp" />
+    <ClCompile Include="..\src\HTTPHandler.cpp" />
+    <ClCompile Include="..\src\HTTPSession.cpp" />
+    <ClCompile Include="..\src\Master.cpp" />
+    <ClCompile Include="..\src\MasterSession.cpp" />
+    <ClCompile Include="..\src\Session.cpp" />
+    <ClCompile Include="..\src\UVSockService.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9EC33A65-4F99-454B-B5F4-CA2698E37021}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -77,9 +137,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../maraton-include;../maration-msg;$(IncludePath)</IncludePath>
-    <ReferencePath>../maration-msg;../maraton-src;$(ReferencePath)</ReferencePath>
-    <LibraryPath>../maraton-lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\include;..\msg;$(IncludePath)</IncludePath>
+    <ReferencePath>..\msg;..\src;$(ReferencePath)</ReferencePath>
+    <LibraryPath>..\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -149,67 +209,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\maration-msg\Message.h" />
-    <ClInclude Include="..\maraton-include\android-ifaddrs.h" />
-    <ClInclude Include="..\maraton-include\Buffer.hpp" />
-    <ClInclude Include="..\maraton-include\CircleBuffer.hpp" />
-    <ClInclude Include="..\maraton-include\ClusterSession.h" />
-    <ClInclude Include="..\maraton-include\Executor.h" />
-    <ClInclude Include="..\maraton-include\ExecutorManager.h" />
-    <ClInclude Include="..\maraton-include\ExecutorSession.h" />
-    <ClInclude Include="..\maraton-include\HTTP.h" />
-    <ClInclude Include="..\maraton-include\HTTPHandler.h" />
-    <ClInclude Include="..\maraton-include\HTTPRequest.hpp" />
-    <ClInclude Include="..\maraton-include\HTTPResponse.hpp" />
-    <ClInclude Include="..\maraton-include\HTTPRouter.hpp" />
-    <ClInclude Include="..\maraton-include\HTTPSession.h" />
-    <ClInclude Include="..\maraton-include\json.hpp" />
-    <ClInclude Include="..\maraton-include\Logger.hpp" />
-    <ClInclude Include="..\maraton-include\Macros.h" />
-    <ClInclude Include="..\maraton-include\Manager.hpp" />
-    <ClInclude Include="..\maraton-include\maraton.h" />
-    <ClInclude Include="..\maraton-include\Master.h" />
-    <ClInclude Include="..\maraton-include\MasterSession.h" />
-    <ClInclude Include="..\maraton-include\pthread-fixes.h" />
-    <ClInclude Include="..\maraton-include\Session.h" />
-    <ClInclude Include="..\maraton-include\SessionManager.hpp" />
-    <ClInclude Include="..\maraton-include\Singleton.hpp" />
-    <ClInclude Include="..\maraton-include\stdint-msvc2008.h" />
-    <ClInclude Include="..\maraton-include\Timer.hpp" />
-    <ClInclude Include="..\maraton-include\tree.h" />
-    <ClInclude Include="..\maraton-include\Types.h" />
-    <ClInclude Include="..\maraton-include\UUID.hpp" />
-    <ClInclude Include="..\maraton-include\uv-aix.h" />
-    <ClInclude Include="..\maraton-include\uv-bsd.h" />
-    <ClInclude Include="..\maraton-include\uv-darwin.h" />
-    <ClInclude Include="..\maraton-include\uv-errno.h" />
-    <ClInclude Include="..\maraton-include\uv-linux.h" />
-    <ClInclude Include="..\maraton-include\uv-sunos.h" />
-    <ClInclude Include="..\maraton-include\uv-threadpool.h" />
-    <ClInclude Include="..\maraton-include\uv-unix.h" />
-    <ClInclude Include="..\maraton-include\uv-version.h" />
-    <ClInclude Include="..\maraton-include\uv-win.h" />
-    <ClInclude Include="..\maraton-include\uv.h" />
-    <ClInclude Include="..\maraton-include\UVSockService.h" />
-    <ClInclude Include="..\maraton-include\vld.h" />
-    <ClInclude Include="..\maraton-include\vld_def.h" />
-    <ClInclude Include="..\maraton-include\Zlib.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\maration-msg\Message.cpp" />
-    <ClCompile Include="..\maraton-src\ClusterSession.cpp" />
-    <ClCompile Include="..\maraton-src\Executor.cpp" />
-    <ClCompile Include="..\maraton-src\ExecutorManager.cpp" />
-    <ClCompile Include="..\maraton-src\ExecutorSession.cpp" />
-    <ClCompile Include="..\maraton-src\HTTPHandler.cpp" />
-    <ClCompile Include="..\maraton-src\HTTPSession.cpp" />
-    <ClCompile Include="..\maraton-src\Master.cpp" />
-    <ClCompile Include="..\maraton-src\MasterSession.cpp" />
-    <ClCompile Include="..\maraton-src\Session.cpp" />
-    <ClCompile Include="..\maraton-src\UVSockService.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
