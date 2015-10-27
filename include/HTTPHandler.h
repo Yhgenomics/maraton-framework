@@ -17,7 +17,6 @@ public:
 
     HTTPHandler( HTTPSession * session);
     HTTPRouter* router()  { return &this->router_; };
-    HTTPSession* session() { return this->session_; };
 
 private:
 

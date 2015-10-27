@@ -18,13 +18,13 @@ public:
     virtual ~ClusterSession() override;
 
     void send( Message* message );
+    virtual void on_message( callback_t callback );
 
 protected:
 
     void recv( const char* data, int len ) override;
     void send( const char* data, int len ) override;
     virtual void message( Message* message ) = 0;
-    virtual void on_message( callback_t callback );
 
 private:
 

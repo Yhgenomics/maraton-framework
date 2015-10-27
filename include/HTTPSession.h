@@ -20,10 +20,11 @@ public:
     virtual ~HTTPSession() override;
      
     virtual void recv(const char* data, int len ) override;
+    HTTPHandler* handler() { return this->handler_; }
 
 private:
 
-    HTTPHandler* handler; 
+    HTTPHandler* handler_ = nullptr;
 }; 
 
 #endif //HTTP_SESSION_H_H_ 
