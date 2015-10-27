@@ -8,7 +8,12 @@
 #ifndef TIMER_HPP_
 #define TIMER_HPP_
 
+#include <functional>
+#include <vector>
+
+#include <uv.h>
 #include <time.h>
+
 
 class Timer
 {
@@ -19,7 +24,7 @@ public:
         clock_t t = clock();
         return static_cast< int >( t );
     };
-
+     
 };
 
 #endif // !TIMER_HPP_

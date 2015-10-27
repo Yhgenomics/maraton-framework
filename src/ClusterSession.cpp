@@ -91,9 +91,22 @@ void ClusterSession::send( const char * data, int len )
     SAFE_DELETE( package );
 }
 
-void ClusterSession::on_message( callback_t callback )
+void ClusterSession::shutdown()
+{
+    for ( auto cb : callback_session_list )
+    {
+        cb( this );
+    }
+}
+
+void ClusterSession::on_message( callback_message_t callback )
 {
     callback_list.push_back( callback );
+}
+
+void ClusterSession::on_close( callback_session_t callback )
+{
+    callback_session_list.push_back( callback );
 }
  
 void ClusterSession::send( Message * message )
