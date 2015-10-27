@@ -26,7 +26,7 @@ Message::Message( Message & message )
     this->raw_data_.parse( message.raw_data_.dump() );
     this->command_ = message.command_;
     this->status_ = message.status_;
-
+    this->owner_ = message.owner_;
 }
 
 Message::Message( Message && message )
@@ -34,10 +34,12 @@ Message::Message( Message && message )
     this->raw_data_ = message.raw_data_;
     this->command_ = message.command_;
     this->status_ = message.status_;
+    this->owner_ = message.owner_;
 
     message.raw_data_ = nullptr;
     message.command_ = 0;
     message.status_ = 0;
+    message.owner_ = nullptr;
 }
 
 Message& Message::operator=( Message & message )
@@ -45,6 +47,7 @@ Message& Message::operator=( Message & message )
     this->raw_data_ = message.raw_data_;
     this->command_ = message.command_;
     this->status_ = message.status_;
+    this->owner_ = message.owner_;
 
     return *this;
 }
@@ -54,10 +57,13 @@ Message & Message::operator=( Message && message )
     this->raw_data_ = message.raw_data_;
     this->command_ = message.command_;
     this->status_ = message.status_;
+    this->owner_ = message.owner_;
 
     message.raw_data_ = nullptr;
     message.command_ = 0;
     message.status_ = 0;
+    message.owner_ = nullptr;
+
     return *this;
 }
 
