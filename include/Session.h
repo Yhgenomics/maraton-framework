@@ -35,7 +35,7 @@ public:
     int buffer_len() { return SESSION_BUFFER_SIZE; }
     char* recv_buffer() { return this->recv_buffer_; }
 
-    virtual void close();
+    void close();
 
     int id() { return this->id_; };
 

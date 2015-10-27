@@ -24,12 +24,6 @@
     <ClInclude Include="..\include\ClusterSession.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Executor.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ExecutorManager.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\ExecutorSession.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -64,9 +58,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\maraton.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Master.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\MasterSession.h">
@@ -260,12 +251,6 @@
     <ClCompile Include="..\src\ClusterSession.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Executor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ExecutorManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\ExecutorSession.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -273,9 +258,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\HTTPSession.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Master.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\MasterSession.cpp">

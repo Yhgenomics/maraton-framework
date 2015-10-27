@@ -2,7 +2,6 @@
 #include "HTTPRequest.hpp"
 #include "HTTPResponse.hpp"
 #include "HTTPSession.h"
-#include "ExecutorManager.h"
 
 HTTPHandler::HTTPHandler( HTTPSession * session )
 {

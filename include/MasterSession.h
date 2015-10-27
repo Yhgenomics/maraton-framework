@@ -23,8 +23,6 @@ public:
     MasterSession( uv_tcp_t * conn );
     virtual ~MasterSession() override;
 
-    virtual void close() override;
-
 protected:
 
     virtual void message( Message* message ) override;

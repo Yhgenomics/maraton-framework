@@ -23,8 +23,6 @@
     <ClInclude Include="..\include\Buffer.hpp" />
     <ClInclude Include="..\include\CircleBuffer.hpp" />
     <ClInclude Include="..\include\ClusterSession.h" />
-    <ClInclude Include="..\include\Executor.h" />
-    <ClInclude Include="..\include\ExecutorManager.h" />
     <ClInclude Include="..\include\ExecutorSession.h" />
     <ClInclude Include="..\include\HTTP.h" />
     <ClInclude Include="..\include\HTTPHandler.h" />
@@ -37,7 +35,6 @@
     <ClInclude Include="..\include\Macros.h" />
     <ClInclude Include="..\include\Manager.hpp" />
     <ClInclude Include="..\include\maraton.h" />
-    <ClInclude Include="..\include\Master.h" />
     <ClInclude Include="..\include\MasterSession.h" />
     <ClInclude Include="..\include\pthread-fixes.h" />
     <ClInclude Include="..\include\Session.h" />
@@ -103,12 +100,9 @@
   <ItemGroup>
     <ClCompile Include="..\msg\Message.cpp" />
     <ClCompile Include="..\src\ClusterSession.cpp" />
-    <ClCompile Include="..\src\Executor.cpp" />
-    <ClCompile Include="..\src\ExecutorManager.cpp" />
     <ClCompile Include="..\src\ExecutorSession.cpp" />
     <ClCompile Include="..\src\HTTPHandler.cpp" />
     <ClCompile Include="..\src\HTTPSession.cpp" />
-    <ClCompile Include="..\src\Master.cpp" />
     <ClCompile Include="..\src\MasterSession.cpp" />
     <ClCompile Include="..\src\Session.cpp" />
     <ClCompile Include="..\src\UVSockService.cpp" />

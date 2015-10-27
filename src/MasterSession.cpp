@@ -2,9 +2,10 @@
 
 #include <stdio.h>
 #include <memory.h>
-#include "Master.h"
 
 #include "SessionManager.hpp"
+#include "Message.h"
+#include "MessagesHandler.hpp"
 
 MasterSession::MasterSession( uv_tcp_t * conn )
     : ClusterSession::ClusterSession( conn )
@@ -14,15 +15,10 @@ MasterSession::MasterSession( uv_tcp_t * conn )
 MasterSession::~MasterSession()
 {
 }
- 
-void MasterSession::close()
-{
-    SessionManager<MasterSession>::instance()->remove( this );
-}
-
+  
 void MasterSession::message( Message * message )
 {
-    
+    Protocol::MessagesHandler::process( message );
 }
 
 void MasterSession::shutdown()
