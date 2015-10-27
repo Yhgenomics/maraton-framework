@@ -23,8 +23,7 @@ Message::Message( const std::string version, size_t command, size_t status )
 
 Message::Message( Message & message )
 {
-    std::string str = message.raw_data_.dump();
-    this->raw_data_.parse( str );
+    this->raw_data_ = nlohmann::json::parse( message.raw_data_.dump() );
     this->command_ = message.command_;
     this->status_ = message.status_;
     this->owner_ = message.owner_;
@@ -45,8 +44,7 @@ Message::Message( Message && message )
 
 Message& Message::operator=( Message & message )
 {
-    std::string str = message.raw_data_;
-    this->raw_data_.parse( str );
+    this->raw_data_ = nlohmann::json::parse( message.raw_data_.dump() );
     this->command_ = message.command_;
     this->status_ = message.status_;
     this->owner_ = message.owner_;
