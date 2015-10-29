@@ -52,7 +52,7 @@ int Session::create_session_id()
     static std::mutex m_lock;
 
     m_lock.lock();
-    session_id++;
+    session_id = session_id + 1;
     m_lock.unlock();
 
     return session_id;
