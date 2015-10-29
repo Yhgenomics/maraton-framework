@@ -21,5 +21,6 @@ void MasterSession::message( Message * message )
 
 void MasterSession::shutdown()
 {
+    ClusterSession::shutdown();
     SessionManager<MasterSession>::instance()->remove( this );
 }

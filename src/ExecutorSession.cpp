@@ -21,5 +21,6 @@ void ExecutorSession::message( Message * message )
 
 void ExecutorSession::shutdown()
 {
+    ClusterSession::shutdown();
     SessionManager<ExecutorSession>::instance()->remove( this );
 }
