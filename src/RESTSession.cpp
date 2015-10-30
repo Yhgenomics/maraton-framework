@@ -9,10 +9,24 @@ RESTSession::RESTSession( uv_tcp_t * conn )
     } );
 
     router.request( [this] ( HTTPRequest* req ) {
-        Message message( req->body() );
-        message.owner( this );
-        this->message( &message );
-        ClusterSession::dispatch_message( &message );
+        std::string body_str = req->body();
+        if ( body_str.empty() )
+        {
+            this->close();
+            return;
+        }
+
+        try
+        {
+            Message message( body_str );
+            message.owner( this );
+            this->message( &message );
+            ClusterSession::dispatch_message( &message );
+        }
+        catch ( exception ee )
+        {
+            this->close();
+        }
     } );
 }
 
