@@ -133,11 +133,13 @@ private:
 
         if ( !exist )
         {
-            //std::unique_ptr<HTTPResponse> ptr_rep;
-            HTTPResponse* ptr_rep = new HTTPResponse();
-
-            ptr_rep->status( 404 );
-            this->response_callback_( ptr_rep );
+           
+            if ( this->response_callback_ != nullptr )
+            {
+                HTTPResponse* ptr_rep = new HTTPResponse();
+                ptr_rep->status( 404 );
+                this->response_callback_( ptr_rep );
+            }
 
         }
 

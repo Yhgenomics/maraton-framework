@@ -2,7 +2,7 @@
 #include "ClusterSession.h"
 
 Message::Message(const std::string json_str )
-{
+{ 
     this->raw_data_ = nlohmann::json::parse( json_str );;
 
     this->status_ = this->raw_data_["status"];
