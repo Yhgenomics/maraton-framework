@@ -3,6 +3,7 @@
 #include "ExecutorSession.h"
 #include "MasterSession.h"
 #include "HTTPSession.h"
+#include "RESTSession.h"
 
 UVSockService::UVSockService()
 {
@@ -106,7 +107,7 @@ void UVSockService::uv_connection_cb_process( uv_stream_t * server, int status )
             break;
 
         case RESTAPI:
-            session = SessionManager<HTTPSession>::instance()->create( client );
+            session = SessionManager<RESTSession>::instance()->create( client );
             break;
 
         case EXECUTOR:
