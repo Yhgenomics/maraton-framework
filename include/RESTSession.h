@@ -7,6 +7,8 @@
 #ifndef REST_SESSION_H_
 #define REST_SESSION_H_ 
 
+#include "uv.h"
+
 #include "ClusterSession.h"
 #include "HTTPRouter.hpp"
 
@@ -14,6 +16,9 @@ class RESTSession :
     public ClusterSession
 {
 public:
+
+    RESTSession( uv_tcp_t* conn );
+    virtual ~RESTSession() override;
 
     virtual void message( Message * message ) override;
     virtual void send( Message* message ) override;

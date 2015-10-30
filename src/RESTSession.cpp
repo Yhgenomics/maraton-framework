@@ -1,5 +1,14 @@
 #include "RESTSession.h"
 
+RESTSession::RESTSession( uv_tcp_t * conn )
+    : ClusterSession(conn)
+{
+}
+
+RESTSession::~RESTSession()
+{
+}
+
 void RESTSession::message( Message * message )
 {
     router.response( [this] ( HTTPResponse* rep ) {
