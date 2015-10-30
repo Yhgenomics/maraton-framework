@@ -93,9 +93,22 @@ void ClusterSession::send( const char * data, int len )
 
 void ClusterSession::shutdown()
 {
-    for ( auto cb : callback_session_list )
+    this->dispatch_close();
+}
+
+void ClusterSession::dispatch_message( Message* message )
+{
+    for ( auto cb : callback_list )
     {
-        cb( this );
+        cb( message );
+    } 
+}
+
+void ClusterSession::dispatch_close()
+{
+    for ( auto cb : this->callback_session_list )
+    {
+        cb(this);
     }
 }
 
@@ -166,19 +179,12 @@ bool ClusterSession::try_read_body()
 
     auto raw_data = this->compressor_.uncompress( data.get() , this->compressed_length_ );
     
-    invoke_message( std::string( raw_data.raw(), raw_data.length() ) );
-
-    return true;
-}
-
-void ClusterSession::invoke_message( std::string json )
-{
-    Message message( json );
+    
+    Message message( std::string( raw_data.raw(), raw_data.length() ) );
     message.owner( this );
     this->message( &message );
 
-    for ( auto cb : callback_list )
-    {
-        cb( &message );
-    }
-}
+    this->dispatch_message( &message );
+
+    return true;
+} 

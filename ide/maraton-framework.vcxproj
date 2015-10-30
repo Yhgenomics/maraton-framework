@@ -38,6 +38,7 @@
     <ClInclude Include="..\include\MasterSession.h" />
     <ClInclude Include="..\include\Message.h" />
     <ClInclude Include="..\include\pthread-fixes.h" />
+    <ClInclude Include="..\include\RESTSession.h" />
     <ClInclude Include="..\include\Session.h" />
     <ClInclude Include="..\include\SessionManager.hpp" />
     <ClInclude Include="..\include\Singleton.hpp" />
@@ -69,6 +70,7 @@
     <ClCompile Include="..\src\HTTPSession.cpp" />
     <ClCompile Include="..\src\MasterSession.cpp" />
     <ClCompile Include="..\src\Message.cpp" />
+    <ClCompile Include="..\src\RESTSession.cpp" />
     <ClCompile Include="..\src\Session.cpp" />
     <ClCompile Include="..\src\UVSockService.cpp" />
   </ItemGroup>

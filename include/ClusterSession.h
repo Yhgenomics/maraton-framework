@@ -24,10 +24,13 @@ public:
 
 protected:
 
-    void recv( const char* data, int len ) override;
-    void send( const char* data, int len ) override;
+    virtual void recv( const char* data, int len ) override;
+    virtual void send( const char* data, int len ) override;
     virtual void message( Message* message ) = 0;
     virtual void shutdown() override;
+
+    virtual void dispatch_message( Message* message );
+    virtual void dispatch_close();
 
 private:
 
@@ -49,7 +52,6 @@ private:
     bool try_read_flag();
     bool try_read_head();
     bool try_read_body();
-    void invoke_message( std::string json );
 
     std::vector<callback_message_t> callback_list;
     std::vector<callback_session_t> callback_session_list;
