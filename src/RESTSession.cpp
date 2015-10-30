@@ -3,14 +3,6 @@
 RESTSession::RESTSession( uv_tcp_t * conn )
     : ClusterSession(conn)
 {
-}
-
-RESTSession::~RESTSession()
-{
-}
-
-void RESTSession::message( Message * message )
-{
     router.response( [this] ( HTTPResponse* rep ) {
         auto result = rep->bytes();
         this->send( result.raw(), result.length() );
@@ -22,6 +14,15 @@ void RESTSession::message( Message * message )
         this->message( &message );
         ClusterSession::dispatch_message( &message );
     } );
+}
+
+RESTSession::~RESTSession()
+{
+}
+
+void RESTSession::message( Message * message )
+{
+    
 }
 
 void RESTSession::send( Message * message )
