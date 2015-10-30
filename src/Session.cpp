@@ -35,9 +35,12 @@ void Session::send( const char * data, int len )
     write_req_->data = p_buf.base;
 
     int result = 1;
-    while ( result )
+    int try_count = 0;
+
+    while ( result && ( try_count < 10 ) )
     {
         result = uv_write( write_req_, ( uv_stream_t* )this->conn_, &p_buf, 1 , UVSockService::uv_write_cb_process );
+        try_count++;
     }
 }
 
