@@ -119,12 +119,12 @@ private:
             if ( p->method == req->method() && p->path == req->path() )
             {
                 //std::unique_ptr<HTTPResponse> ptr_rep;
-                HTTPResponse* ptr_rep = new HTTPResponse();
-                ptr_rep->status( 200 );
-                p->callback( req, ptr_rep );
+                HTTPResponse rep;
+                rep.status( 200 );
+                p->callback( req, &rep );
 
                 if ( this->response_callback_ != nullptr )
-                    this->response_callback_( ptr_rep );
+                    this->response_callback_( &rep );
                  
                 exist = true;
             }

@@ -3,10 +3,10 @@
 RESTSession::RESTSession( uv_tcp_t * conn )
     : ClusterSession(conn)
 {
-    router.response( [this] ( HTTPResponse* rep ) {
-        auto result = rep->bytes();
-        this->send( result.raw(), result.length() );
-    } );
+    //router.response( [this] ( HTTPResponse* rep ) {
+    //    auto result = rep->bytes();
+    //    this->send( result.raw(), result.length() );
+    //} );
 
     router.request( [this] ( HTTPRequest* req ) {
         std::string body_str = req->body();

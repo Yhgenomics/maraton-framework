@@ -201,7 +201,7 @@ void UVSockService::uv_write_cb_process( uv_write_t * req, int status )
     {   
         return;
     } 
-
+    
     SAFE_DELETE( req->data );
     SAFE_DELETE( req );
 }

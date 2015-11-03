@@ -37,11 +37,15 @@ void Session::send( const char * data, int len )
     int result = 1;
     int try_count = 0;
 
-    while ( result && ( try_count < 10 ) )
+    while ( result && ( try_count < 5 ) )
     {
         result = uv_write( write_req_, ( uv_stream_t* )this->conn_, &p_buf, 1 , UVSockService::uv_write_cb_process );
         try_count++;
     }
+
+    /*if( try_count >0 )
+     SAFE_DELETE( write_req_ );*/
+
 }
 
 void Session::close()
