@@ -136,9 +136,9 @@ private:
            
             if ( this->response_callback_ != nullptr )
             {
-                HTTPResponse* ptr_rep = new HTTPResponse();
-                ptr_rep->status( 404 );
-                this->response_callback_( ptr_rep );
+                HTTPResponse rep;
+                rep.status( 404 );
+                this->response_callback_( &rep );
             }
 
         }
