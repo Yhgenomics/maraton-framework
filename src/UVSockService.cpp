@@ -5,6 +5,8 @@
 #include "HTTPSession.h"
 #include "RESTSession.h"
 
+bool UVSockService::is_connecting = false;
+
 UVSockService::UVSockService()
 {
     this->loop_ = nullptr;
@@ -51,6 +53,9 @@ bool UVSockService::listen( std::string ip, int port )
 
 bool UVSockService::connect( std::string ip, int port )
 {
+    if ( is_connecting )
+        return false;
+
     this->loop_ = uv_default_loop();
     auto socket_ = new uv_tcp_t();
 
@@ -70,12 +75,14 @@ bool UVSockService::connect( std::string ip, int port )
         ( const struct sockaddr* )&addr_in, 
         UVSockService::uv_connected_cb_process );
 
+    is_connecting = true;
+
     return true;
 }
 
 void UVSockService::run()
 { 
-    uv_run( this->loop_, UV_RUN_DEFAULT );
+    uv_run( uv_default_loop() , UV_RUN_DEFAULT );
 }
 
 uv_loop_t * UVSockService::loop()
@@ -136,6 +143,7 @@ void UVSockService::uv_connection_cb_process( uv_stream_t * server, int status )
 
 void UVSockService::uv_connected_cb_process( uv_connect_t * req, int status )
 { 
+  
     if ( status < 0 )
     {
         //Logger::error( "%s", uv_strerror( static_cast< int >( status ) ) );
@@ -147,12 +155,16 @@ void UVSockService::uv_connected_cb_process( uv_connect_t * req, int status )
         SAFE_DELETE ( sock );
         SAFE_DELETE ( connect );
 
+        is_connecting = false;
+
         return;
     }
 
     uv_tcp_t* client = static_cast< uv_tcp_t* >( req->data );
 
     auto session = SessionManager<MasterSession>::instance()->create( client );
+ 
+    is_connecting = false;
 
     session->loop_ = client->loop;
 
@@ -170,6 +182,7 @@ void UVSockService::uv_alloc_cb_process( uv_handle_t * handle, size_t suggested_
 
     buf->base = session->recv_buffer();
     buf->len = session->buffer_len();
+    memset( buf->base , 0 , buf->len );
 }
 
 void UVSockService::uv_read_cb_process( uv_stream_t * stream, ssize_t nread, const uv_buf_t * buf )

@@ -158,7 +158,7 @@ public:
                     sequeue.clear();
                     break;
                 }  
-                sequeue.push_back( *pdata );
+                add_body( *pdata );
             }break;
 
             default:
@@ -213,6 +213,11 @@ private:
     void add_sequeue( char c )
     {
         if ( c != '\r' && c != '\n' && c != ' ' && c!=0 )
+            this->sequeue.push_back( c );
+    }
+    void add_body( char c )
+    {
+        if ( c != '\0' )
             this->sequeue.push_back( c );
     }
 };

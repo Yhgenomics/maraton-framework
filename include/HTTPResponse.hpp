@@ -40,8 +40,8 @@ public:
 
     void content( std::string content )
     {
-        memcpy( this->content_, content.c_str(), content.length()+1 );
-        this->content_len_ = static_cast< int > ( content.length() + 1 );
+        memcpy( this->content_, content.c_str(), content.length() );
+        this->content_len_ = static_cast< int > ( content.length());
     };
 
     int length() 
@@ -55,6 +55,8 @@ public:
         int len = 0;
         char* buffer = new char[HTTP_RESPONSE_CONTENT_SIZE];
         string head = "";
+
+        memset( buffer , 0 , HTTP_RESPONSE_CONTENT_SIZE );
 
         head += "HTTP/1.0 "+ this->status_description( this->status_ ) + "\r\n";
 #ifdef WIN32
@@ -73,9 +75,9 @@ public:
 
         head += "\r\n";
 
-        memcpy( buffer, head.c_str(), head.length() );
+        memcpy( buffer + len , head.c_str(), head.length() );
         len += static_cast< int >( head.length() );
-        memcpy( buffer + head.length(), this->content_, this->content_len_ );
+        memcpy( buffer + len , this->content_ , this->content_len_ );
         len += this->content_len_;
 
         ret.raw( buffer, len );

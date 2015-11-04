@@ -71,7 +71,7 @@ Buffer Message::bytes()
 {
     Buffer buffer;
     std::string json = this->raw_data_.dump();
-    buffer.raw( json.c_str(), static_cast< int >( json.length() ) + 1 );
+    buffer.raw( json.c_str(), static_cast< int >( json.length() ) );
 
     return buffer;
 }

@@ -48,7 +48,7 @@ public:
 #endif
 
         va_start( args, fmt );
-        printf( fmt, *args );
+        printf( fmt , *args );
         va_end( args );
 
 #ifdef WIN32

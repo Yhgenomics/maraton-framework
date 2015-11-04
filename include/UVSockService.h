@@ -59,6 +59,8 @@ private:
     };
 
     uv_tcp_t* socket_;
+
+    static bool is_connecting;
 };
 
 #endif // !UV_SOCK_SERVICE_H_
