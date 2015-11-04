@@ -16,18 +16,17 @@ class Logger
 {
 public:
 
-    static void sys( const char* fmt, ... )
+    template<typename ...Types>
+    static void sys( const char* fmt, Types... args)
     {
-        va_list args;
 
 #ifdef WIN32
         printf( "\033[1;33m[SYS]" );
 #else
         printf( "[SYS]" );
 #endif
-        va_start( args, fmt );
-        printf( fmt, *args );
-        va_end( args );
+
+        printf( fmt, args... );
 
 #ifdef WIN32
         printf( "\033[0m\r\n" );
@@ -36,20 +35,16 @@ public:
 #endif      
 
     }
-
-    static void error( const char* fmt, ... )
+    template<typename ...Types>
+    static void error( const char* fmt, Types... args )
     {
-        va_list args;
-
 #ifdef WIN32
         printf( "\033[0;31m[ERROR]" );
 #else
         printf( "[ERROR]" );
 #endif
 
-        va_start( args, fmt );
-        printf( fmt , *args );
-        va_end( args );
+        printf( fmt , args... );
 
 #ifdef WIN32
         printf( "\033[0;31m\r\n" );
