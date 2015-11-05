@@ -43,6 +43,7 @@
     <ClInclude Include="..\include\SessionManager.hpp" />
     <ClInclude Include="..\include\Singleton.hpp" />
     <ClInclude Include="..\include\stdint-msvc2008.h" />
+    <ClInclude Include="..\include\SysProcess.h" />
     <ClInclude Include="..\include\Timer.hpp" />
     <ClInclude Include="..\include\tree.h" />
     <ClInclude Include="..\include\Types.h" />
@@ -72,6 +73,7 @@
     <ClCompile Include="..\src\Message.cpp" />
     <ClCompile Include="..\src\RESTSession.cpp" />
     <ClCompile Include="..\src\Session.cpp" />
+    <ClCompile Include="..\src\SysProcess.cpp" />
     <ClCompile Include="..\src\UVSockService.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -98,7 +100,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>

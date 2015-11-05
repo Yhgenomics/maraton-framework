@@ -138,6 +138,9 @@
     <ClInclude Include="..\include\RESTSession.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\SysProcess.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ClusterSession.cpp">
@@ -165,6 +168,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\RESTSession.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SysProcess.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
