@@ -48,6 +48,7 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
         &instance->pi_ ) )
     {
         instance->result = GetLastError();
+        uv_sem_post( &instance->sem );
         return;
     }
 
