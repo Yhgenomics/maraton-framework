@@ -25,60 +25,7 @@ SysProcess::~SysProcess()
         this->directory_ = NULL;
     }
 }
-
-void SysProcess::thr_process( SysProcess * process )
-{
-    SysProcess* instance = process;
-
-#ifdef _WIN32
-
-    instance->pi_ = { };
-    instance->si_ = { sizeof( instance->si_ ) };
-
-    if ( !CreateProcess(
-        instance->file_ ,
-        instance->args_ ,
-        NULL ,
-        NULL ,
-        FALSE ,
-        CREATE_NO_WINDOW ,
-        NULL ,
-        instance->directory_ ,
-        &instance->si_ ,
-        &instance->pi_ ) )
-    {
-        instance->result = GetLastError();
-        return;
-    }
-
-    WaitForSingleObject( instance->pi_.hProcess , INFINITE );
-    DWORD dwExitCode;
-    GetExitCodeProcess( instance->pi_.hProcess , &dwExitCode );
-    instance->result = ( size_t )dwExitCode;
-    CloseHandle( instance->pi_.hThread );
-    CloseHandle( instance->pi_.hProcess );
-
-    memset( &instance->si_ , 0 , sizeof( instance->si_ ) );
-    memset( &instance->pi_ , 0 , sizeof( instance->pi_ ) );
-
-#else
-
-    char tmp_buffer[10240] = { 0 };
-    int file_length = strlen( instance->file_ );
-    int args_length = strlen( instance->args_ );
-    memcpy( tmp_buffer , instance->file_ , file_length );
-    memcpy( tmp_buffer + file_length , " " , 1 );
-    memcpy( tmp_buffer + file_length + 1 , instance->args_ , args_length );
-
-    instance->p_stream = popen( tmp_buffer , "r" );
-
-    fread( instance->output_buffer_ , sizeof( char ) , sizeof( instance->output_buffer_ ) , instance->p_stream );
-
-    pclose( instance->p_stream );
-
-#endif // _WIN32
-}
-
+ 
 void SysProcess::uv_work_process_callback( uv_work_t * req )
 {
     SysProcess* instance = static_cast< SysProcess* >( req->data );

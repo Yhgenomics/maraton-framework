@@ -22,7 +22,6 @@ public:
     SysProcess( std::string  file, std::function<void( size_t )> on_finish );
     ~SysProcess();
 
-    static void thr_process( SysProcess* process );
     static void uv_work_process_callback( uv_work_t* req );
     static void uv_after_work_process_callback( uv_work_t* req , int status );
 
