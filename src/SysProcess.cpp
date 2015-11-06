@@ -41,7 +41,7 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
         NULL ,
         NULL ,
         FALSE ,
-        CREATE_NO_WINDOW | NORMAL_PRIORITY_CLASS ,
+        CREATE_NO_WINDOW | CREATE_NEW_CONSOLE ,
         NULL ,
         instance->directory_ ,
         &instance->si_ ,
@@ -97,6 +97,8 @@ SysProcess::SysProcess()
 SysProcess::SysProcess( std::string  file, std::string  args, std::string  directry, std::function<void( size_t )> on_finish )
     : SysProcess()
 {
+    std::string newArgs = " " + args;
+
     this->file_ = new char[this->STR_LENGTH];
     this->args_ = new char[this->STR_LENGTH];
     this->directory_ = new char[this->STR_LENGTH];
@@ -105,7 +107,7 @@ SysProcess::SysProcess( std::string  file, std::string  args, std::string  direc
     memset( this->directory_, 0, this->STR_LENGTH );
 
     memcpy( this->file_, file.c_str() , file.length() );
-    memcpy( this->args_, args.c_str(), args.length() );
+    memcpy( this->args_, newArgs.c_str(), newArgs.length() );
     memcpy( this->directory_, directry.c_str(), directry.length() );
     this->callback = on_finish;
     this->invoke();
@@ -114,13 +116,15 @@ SysProcess::SysProcess( std::string  file, std::string  args, std::string  direc
 SysProcess::SysProcess( std::string  file, std::string  args, std::function<void( size_t )> on_finish )
     : SysProcess()
 {
+    std::string newArgs = " " + args;
+
     this->file_ = new char[this->STR_LENGTH];
     this->args_ = new char[this->STR_LENGTH]; 
     memset( this->file_, 0, this->STR_LENGTH );
     memset( this->args_, 0, this->STR_LENGTH ); 
 
     memcpy( this->file_, file.c_str(), file.length() );
-    memcpy( this->args_, args.c_str(), args.length() ); 
+    memcpy( this->args_, newArgs.c_str(), newArgs.length() );
     this->callback = on_finish;
     this->invoke();
 }
