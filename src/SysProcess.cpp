@@ -72,7 +72,7 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
      
     instance->p_stream = popen( tmp_buffer , "r" );
 
-    pread( instance->output_buffer  , sizeof( char ) , sizeof( instance->output_buffer ), instance->p_stream );
+    fread( instance->output_buffer_  , sizeof( char ) , sizeof( instance->output_buffer_ ), instance->p_stream );
 
     pclose( instance->p_stream );
 
