@@ -2,6 +2,7 @@
 #include <thread>
 #include <string.h>
 #include <memory>
+#include <thread>
 
 
 SysProcess::~SysProcess()
@@ -25,9 +26,9 @@ SysProcess::~SysProcess()
     }
 }
 
-void SysProcess::uv_work_process_callback( uv_work_t * req )
+void SysProcess::thr_process( SysProcess * process )
 {
-    SysProcess* instance = static_cast< SysProcess* >( req->data );
+    SysProcess* instance = process;
 
 #ifdef _WIN32
 
@@ -47,6 +48,7 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
         &instance->pi_ ) )
     {
         instance->result = GetLastError();
+        return;
     }
 
     WaitForSingleObject( instance->pi_.hProcess , INFINITE );
@@ -59,8 +61,59 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
     memset( &instance->si_ , 0 , sizeof( instance->si_ ) );
     memset( &instance->pi_ , 0 , sizeof( instance->pi_ ) );
 
-     
-  
+#else
+
+    char tmp_buffer[10240] = { 0 };
+    int file_length = strlen( instance->file_ );
+    int args_length = strlen( instance->args_ );
+    memcpy( tmp_buffer , instance->file_ , file_length );
+    memcpy( tmp_buffer + file_length , " " , 1 );
+    memcpy( tmp_buffer + file_length + 1 , instance->args_ , args_length );
+
+    instance->p_stream = popen( tmp_buffer , "r" );
+
+    fread( instance->output_buffer_ , sizeof( char ) , sizeof( instance->output_buffer_ ) , instance->p_stream );
+
+    pclose( instance->p_stream );
+
+#endif // _WIN32
+}
+
+void SysProcess::uv_work_process_callback( uv_work_t * req )
+{
+    SysProcess* instance = static_cast< SysProcess* >( req->data );
+
+#ifdef _WIN32
+
+    instance->pi_ = { };
+    instance->si_ = { sizeof( instance->si_ ) };
+
+    if ( !CreateProcess(
+        instance->file_ ,
+        instance->args_ ,
+        NULL ,
+        NULL ,
+        FALSE ,
+        CREATE_NO_WINDOW | NORMAL_PRIORITY_CLASS ,
+        NULL ,
+        instance->directory_ ,
+        &instance->si_ ,
+        &instance->pi_ ) )
+    {
+        instance->result = GetLastError();
+        return;
+    }
+
+    WaitForSingleObject( instance->pi_.hProcess , INFINITE );
+    DWORD dwExitCode;
+    GetExitCodeProcess( instance->pi_.hProcess , &dwExitCode );
+    instance->result = ( size_t )dwExitCode;
+    CloseHandle( instance->pi_.hThread );
+    CloseHandle( instance->pi_.hProcess );
+
+    memset( &instance->si_ , 0 , sizeof( instance->si_ ) );
+    memset( &instance->pi_ , 0 , sizeof( instance->pi_ ) );
+
 #else
  
     char tmp_buffer[10240] = { 0 };
@@ -78,19 +131,19 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
 
 #endif // _WIN32
 
+    uv_sem_post( &instance->sem );
 }
 
 void SysProcess::uv_after_work_process_callback( uv_work_t * req , int status )
 {
     SysProcess* instance = static_cast< SysProcess* >( req->data );
-
-    instance->callback( instance->result );
-
+    instance->callback( instance->result ); 
+    uv_sem_post( &instance->sem );
 }
 
 SysProcess::SysProcess()
 {
-    
+    uv_sem_init( &this->sem , 0 );
 }
 
 SysProcess::SysProcess( std::string  file, std::string  args, std::string  directry, std::function<void( size_t )> on_finish )
@@ -138,28 +191,22 @@ SysProcess::SysProcess( std::string  file, std::function<void( size_t )> on_fini
 }
 
 void SysProcess::invoke()
-{
+{ 
+    
+    this->worker.data = this;
+    uv_queue_work( uv_default_loop() , &this->worker , SysProcess::uv_work_process_callback , SysProcess::uv_after_work_process_callback );
 
-    this->worker->data = this;
-    uv_queue_work( uv_default_loop() , this->worker , SysProcess::uv_work_process_callback , SysProcess::uv_after_work_process_callback );
-
+    //std::thread thr( thr_process, this );
 }
 void SysProcess::wait_for_exit()
-{
-    
-    if ( result != 0 )
-    {
-        this->callback( result );
-        return;
-    }
-     
-    this->callback( result );
+{ 
+    uv_sem_wait( &this->sem );
 }
 
 void SysProcess::kill()
 {
 
-    uv_cancel( ( uv_req_t*) this->worker );
+    uv_cancel( ( uv_req_t*) &this->worker );
 
 #ifdef _WIN32
     
