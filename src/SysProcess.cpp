@@ -70,11 +70,11 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
     memcpy( tmp_buffer + file_length , " " , 1 );
     memcpy( tmp_buffer + file_length + 1 , instance->args_ , args_length );
      
-    p_stream = popen( tmp_buffer , "r" );
+    instance->p_stream = popen( tmp_buffer , "r" );
 
-    pread( instance->output_buffer  , sizeof( char ) , sizeof( instance->output_buffer ), p_stream );
+    pread( instance->output_buffer  , sizeof( char ) , sizeof( instance->output_buffer ), instance->p_stream );
 
-    pclose( p_stream );
+    pclose( instance->p_stream );
 
 #endif // _WIN32
 
