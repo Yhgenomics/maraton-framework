@@ -127,18 +127,22 @@ SysProcess::SysProcess( std::string  file, std::string  args, std::function<void
 SysProcess::SysProcess( std::string  file, std::function<void( size_t )> on_finish )
     : SysProcess()
 {
+
     this->file_ = new char[this->STR_LENGTH]; 
     memset( this->file_, 0, this->STR_LENGTH );
 
     memcpy( this->file_, file.c_str(), file.length() ); 
     this->callback = on_finish;
     this->invoke();
+
 }
 
 void SysProcess::invoke()
 {
+
     this->worker->data = this;
     uv_queue_work( uv_default_loop() , this->worker , SysProcess::uv_work_process_callback , SysProcess::uv_after_work_process_callback );
+
 }
 void SysProcess::wait_for_exit()
 {
@@ -154,6 +158,7 @@ void SysProcess::wait_for_exit()
 
 void SysProcess::kill()
 {
+
     uv_cancel( ( uv_req_t*) this->worker );
 
 #ifdef _WIN32
