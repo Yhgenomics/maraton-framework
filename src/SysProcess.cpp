@@ -24,6 +24,8 @@ SysProcess::~SysProcess()
         delete this->directory_;
         this->directory_ = NULL;
     }
+    
+    uv_sem_destroy( &this->sem );
 }
  
 void SysProcess::uv_work_process_callback( uv_work_t * req )
