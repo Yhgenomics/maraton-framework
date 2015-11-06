@@ -25,7 +25,6 @@ SysProcess::~SysProcess()
         this->directory_ = NULL;
     }
     
-    uv_sem_destroy( &this->sem );
 }
  
 void SysProcess::uv_work_process_callback( uv_work_t * req )
@@ -90,7 +89,7 @@ void SysProcess::uv_after_work_process_callback( uv_work_t * req , int status )
     SysProcess* instance = static_cast< SysProcess* >( req->data );
 
     if ( instance->callback != nullptr )
-        instance->callback( instance->result );
+        instance->callback( instance->result ); 
 }
 
 SysProcess::SysProcess()
@@ -155,6 +154,7 @@ void SysProcess::invoke()
 size_t SysProcess::wait_for_exit()
 { 
     uv_sem_wait( &this->sem );
+    uv_sem_destroy( &this->sem );
     return this->result;
 }
 
