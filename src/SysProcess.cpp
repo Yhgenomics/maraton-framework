@@ -25,6 +25,69 @@ SysProcess::~SysProcess()
     }
 }
 
+void SysProcess::uv_work_process_callback( uv_work_t * req )
+{
+    SysProcess* instance = static_cast< SysProcess* >( req->data );
+
+#ifdef _WIN32
+
+    instance->pi_ = { };
+    instance->si_ = { sizeof( instance->si_ ) };
+
+    if ( !CreateProcess(
+        instance->file_ ,
+        instance->args_ ,
+        NULL ,
+        NULL ,
+        FALSE ,
+        CREATE_NO_WINDOW ,
+        NULL ,
+        instance->directory_ ,
+        &instance->si_ ,
+        &instance->pi_ ) )
+    {
+        instance->result = GetLastError();
+    }
+
+    WaitForSingleObject( instance->pi_.hProcess , INFINITE );
+    DWORD dwExitCode;
+    GetExitCodeProcess( instance->pi_.hProcess , &dwExitCode );
+    instance->result = ( size_t )dwExitCode;
+    CloseHandle( instance->pi_.hThread );
+    CloseHandle( instance->pi_.hProcess );
+
+    memset( &instance->si_ , 0 , sizeof( instance->si_ ) );
+    memset( &instance->pi_ , 0 , sizeof( instance->pi_ ) );
+
+     
+  
+#else
+ 
+    char tmp_buffer[10240] = { 0 };
+    int file_length = strlen( instance->file_ );
+    int args_length = strlen( instance->args_ );
+    memcpy( tmp_buffer , instance->file_ , file_length );
+    memcpy( tmp_buffer + file_length , " " , 1 );
+    memcpy( tmp_buffer + file_length + 1 , instance->args_ , args_length );
+     
+    p_stream = popen( tmp_buffer , "r" );
+
+    pread( instance->output_buffer  , sizeof( char ) , sizeof( instance->output_buffer ), p_stream );
+
+    pclose( p_stream );
+
+#endif // _WIN32
+
+}
+
+void SysProcess::uv_after_work_process_callback( uv_work_t * req , int status )
+{
+    SysProcess* instance = static_cast< SysProcess* >( req->data );
+
+    instance->callback( instance->result );
+
+}
+
 SysProcess::SysProcess()
 {
     
@@ -74,65 +137,32 @@ SysProcess::SysProcess( std::string  file, std::function<void( size_t )> on_fini
 
 void SysProcess::invoke()
 {
-#ifdef _WIN32
-
-    this->pi_ = { };
-    this->si_ = { sizeof( this->si_ ) };
-
-    if ( !CreateProcess( 
-        this->file_, 
-        this->args_, 
-        NULL, 
-        NULL, 
-        FALSE, 
-        CREATE_NO_WINDOW, 
-        NULL, 
-        this->directory_,
-        &this->si_,
-        &this->pi_ ) )
-    {
-        result = GetLastError();
-    }
-
-#else
-
-#endif // _WIN32
+    this->worker->data = this;
+    uv_queue_work( uv_default_loop() , this->worker , SysProcess::uv_work_process_callback , SysProcess::uv_after_work_process_callback );
 }
 void SysProcess::wait_for_exit()
 {
+    
     if ( result != 0 )
     {
         this->callback( result );
         return;
     }
-
-#ifdef _WIN32
-
-    WaitForSingleObject( this->pi_.hProcess, INFINITE );
-    DWORD dwExitCode;
-    GetExitCodeProcess( this->pi_.hProcess, &dwExitCode );
-    result = ( size_t ) dwExitCode;
-    CloseHandle( this->pi_.hThread );
-    CloseHandle( this->pi_.hProcess );
-
-
-    memset( &this->si_, 0, sizeof( this->si_ ) );
-    memset( &this->pi_, 0, sizeof( this->pi_ ) );
-
-#else
-
-#endif // _WIN32
-
+     
     this->callback( result );
 }
 
 void SysProcess::kill()
 {
-#ifdef _WIN32
+    uv_cancel( ( uv_req_t*) this->worker );
 
+#ifdef _WIN32
+    
     TerminateProcess( this->pi_.hProcess, -1 );
 
 #else
+
+    pclose( p_stream );
 
 #endif // _WIN32   
 }
