@@ -82,13 +82,15 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
 #endif // _WIN32
 
     uv_sem_post( &instance->sem );
+
 }
 
 void SysProcess::uv_after_work_process_callback( uv_work_t * req , int status )
 {
     SysProcess* instance = static_cast< SysProcess* >( req->data );
-    instance->callback( instance->result ); 
-    uv_sem_post( &instance->sem );
+
+    if ( instance->callback != nullptr )
+        instance->callback( instance->result );
 }
 
 SysProcess::SysProcess()
@@ -146,15 +148,14 @@ SysProcess::SysProcess( std::string  file, std::function<void( size_t )> on_fini
 
 void SysProcess::invoke()
 { 
-    
     this->worker.data = this;
     uv_queue_work( uv_default_loop() , &this->worker , SysProcess::uv_work_process_callback , SysProcess::uv_after_work_process_callback );
-
-    //std::thread thr( thr_process, this );
 }
-void SysProcess::wait_for_exit()
+
+size_t SysProcess::wait_for_exit()
 { 
     uv_sem_wait( &this->sem );
+    return this->result;
 }
 
 void SysProcess::kill()
