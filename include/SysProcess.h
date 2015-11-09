@@ -25,9 +25,12 @@ public:
     static void uv_work_process_callback( uv_work_t* req );
     static void uv_after_work_process_callback( uv_work_t* req , int status );
 
-    size_t wait_for_exit();
+    void* data() { return this->data_; };
+    void data( void* pdata ) { this->data_ = pdata; };
+
+    void start();
     void kill();
-    
+
 private:
 
     SysProcess();
@@ -36,6 +39,7 @@ private:
     SysProcess( std::string  file , prceoss_callback_t on_finish );
     ~SysProcess();
 
+    size_t wait_for_exit();
     static void desctroy( SysProcess** process );
 
 #ifdef _WIN32
@@ -64,6 +68,8 @@ private:
     uv_work_t worker;
 
     uv_sem_t sem;
+
+    void* data_ = nullptr;
 };
 
 #endif // !PROCESS_H_

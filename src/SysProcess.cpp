@@ -139,8 +139,6 @@ void SysProcess::uv_after_work_process_callback( uv_work_t * req , int status )
 
     if ( instance!=nullptr && instance->callback != nullptr )
         instance->callback( instance , instance->result ); 
-
-    SysProcess::desctroy( &instance ); 
 }
 
 SysProcess::SysProcess()
@@ -164,7 +162,6 @@ SysProcess::SysProcess( std::string  file, std::string  args, std::string  direc
     memcpy( this->args_, newArgs.c_str(), newArgs.length() );
     memcpy( this->directory_, directry.c_str(), directry.length() );
     this->callback = on_finish;
-    this->invoke();
 }
 
 SysProcess::SysProcess( std::string  file, std::string  args, prceoss_callback_t on_finish )
@@ -180,21 +177,17 @@ SysProcess::SysProcess( std::string  file, std::string  args, prceoss_callback_t
     memcpy( this->file_, file.c_str(), file.length() );
     memcpy( this->args_, newArgs.c_str(), newArgs.length() );
 
-    this->callback = on_finish;
-    this->invoke();
+    this->callback = on_finish; 
 }
 
 SysProcess::SysProcess( std::string  file, prceoss_callback_t on_finish )
     : SysProcess()
 {
-
     this->file_ = new char[this->STR_LENGTH]; 
     memset( this->file_, 0, this->STR_LENGTH );
 
     memcpy( this->file_, file.c_str(), file.length() ); 
-    this->callback = on_finish;
-    this->invoke();
-
+    this->callback = on_finish;  
 }
 
 void SysProcess::invoke()
@@ -208,6 +201,11 @@ size_t SysProcess::wait_for_exit()
     uv_sem_wait( &this->sem );
     uv_sem_destroy( &this->sem );
     return this->result;
+}
+
+void SysProcess::start()
+{
+    this->invoke();
 }
 
 void SysProcess::kill()
