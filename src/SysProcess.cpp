@@ -4,9 +4,11 @@
 #include <memory>
 #include <thread>
 
+#include "maraton.h"
 
 SysProcess::~SysProcess()
 {
+
     if ( this->file_ != NULL )
     {
         delete this->file_;
@@ -27,6 +29,33 @@ SysProcess::~SysProcess()
     
 }
  
+void SysProcess::desctroy( SysProcess ** process )
+{
+    if ( process != nullptr && *process != nullptr )
+    {
+        delete *process;
+        *process = nullptr;
+    }
+}
+
+SysProcess * SysProcess::create( std::string file , std::string args , std::string directry , prceoss_callback_t on_finish )
+{
+    auto ret = new SysProcess( file , args , directry , on_finish );
+    return ret;
+}
+
+SysProcess * SysProcess::create( std::string file , std::string args , prceoss_callback_t on_finish )
+{
+    auto ret = new SysProcess( file , args ,  on_finish );
+    return ret;
+}
+
+SysProcess * SysProcess::create( std::string file , prceoss_callback_t on_finish )
+{
+    auto ret = new SysProcess( file , on_finish );
+    return ret;
+}
+
 void SysProcess::uv_work_process_callback( uv_work_t * req )
 {
     SysProcess* instance = static_cast< SysProcess* >( req->data );
@@ -35,6 +64,23 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
 
     instance->pi_ = { };
     instance->si_ = { sizeof( instance->si_ ) };
+    instance->si_.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+    instance->si_.wShowWindow = SW_HIDE; 
+   
+    //UUID uuid;
+    //UuidCreate( &uuid );
+    //char uuid_str[128] = { 0 };
+    //sprintf( uuid_str , "%08X%08X%08X%08X" , uuid.Data1 , uuid.Data2 , uuid.Data3 , uuid.Data4 );
+    //HANDLE hConsoleRedirect = CreateFile(
+    //    uuid_str ,
+    //    GENERIC_WRITE ,
+    //    FILE_SHARE_READ | FILE_SHARE_WRITE ,
+    //    NULL ,
+    //    OPEN_ALWAYS ,
+    //    FILE_ATTRIBUTE_NORMAL ,
+    //    NULL
+    //    );
+    //instance->si_.hStdOutput = hConsoleRedirect;
 
     if ( !CreateProcess(
         instance->file_ ,
@@ -51,7 +97,7 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
         instance->result = GetLastError();
         uv_sem_post( &instance->sem );
         return;
-    }
+    }  
 
     WaitForSingleObject( instance->pi_.hProcess , INFINITE );
     DWORD dwExitCode;
@@ -62,6 +108,9 @@ void SysProcess::uv_work_process_callback( uv_work_t * req )
 
     memset( &instance->si_ , 0 , sizeof( instance->si_ ) );
     memset( &instance->pi_ , 0 , sizeof( instance->pi_ ) );
+
+    //DeleteFile( uuid_str );
+    //FILE* io_file;
 
 #else
  
@@ -88,8 +137,10 @@ void SysProcess::uv_after_work_process_callback( uv_work_t * req , int status )
 {
     SysProcess* instance = static_cast< SysProcess* >( req->data );
 
-    if ( instance->callback != nullptr )
-        instance->callback( instance->result ); 
+    if ( instance!=nullptr && instance->callback != nullptr )
+        instance->callback( instance , instance->result ); 
+
+    SysProcess::desctroy( &instance ); 
 }
 
 SysProcess::SysProcess()
@@ -97,7 +148,7 @@ SysProcess::SysProcess()
     uv_sem_init( &this->sem , 0 );
 }
 
-SysProcess::SysProcess( std::string  file, std::string  args, std::string  directry, std::function<void( size_t )> on_finish )
+SysProcess::SysProcess( std::string  file, std::string  args, std::string  directry, prceoss_callback_t on_finish )
     : SysProcess()
 {
     std::string newArgs = " " + args;
@@ -116,7 +167,7 @@ SysProcess::SysProcess( std::string  file, std::string  args, std::string  direc
     this->invoke();
 }
 
-SysProcess::SysProcess( std::string  file, std::string  args, std::function<void( size_t )> on_finish )
+SysProcess::SysProcess( std::string  file, std::string  args, prceoss_callback_t on_finish )
     : SysProcess()
 {
     std::string newArgs = " " + args;
@@ -128,11 +179,12 @@ SysProcess::SysProcess( std::string  file, std::string  args, std::function<void
 
     memcpy( this->file_, file.c_str(), file.length() );
     memcpy( this->args_, newArgs.c_str(), newArgs.length() );
+
     this->callback = on_finish;
     this->invoke();
 }
 
-SysProcess::SysProcess( std::string  file, std::function<void( size_t )> on_finish )
+SysProcess::SysProcess( std::string  file, prceoss_callback_t on_finish )
     : SysProcess()
 {
 

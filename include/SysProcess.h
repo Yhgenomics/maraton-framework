@@ -16,11 +16,11 @@ class SysProcess
 {
 public:
 
-    SysProcess();
-    SysProcess( std::string  file, std::string  args, std::string  directry, std::function<void(size_t)> on_finish );
-    SysProcess( std::string  file, std::string  args, std::function<void( size_t )> on_finish );
-    SysProcess( std::string  file, std::function<void( size_t )> on_finish );
-    ~SysProcess();
+    typedef std::function<void( SysProcess* , size_t )> prceoss_callback_t;
+
+    static SysProcess* create( std::string  file , std::string  args , std::string  directry , prceoss_callback_t on_finish );
+    static SysProcess* create( std::string  file , std::string  args , prceoss_callback_t on_finish );
+    static SysProcess* create( std::string  file , prceoss_callback_t on_finish );
 
     static void uv_work_process_callback( uv_work_t* req );
     static void uv_after_work_process_callback( uv_work_t* req , int status );
@@ -29,6 +29,14 @@ public:
     void kill();
     
 private:
+
+    SysProcess();
+    SysProcess( std::string  file , std::string  args , std::string  directry , prceoss_callback_t on_finish );
+    SysProcess( std::string  file , std::string  args , prceoss_callback_t on_finish );
+    SysProcess( std::string  file , prceoss_callback_t on_finish );
+    ~SysProcess();
+
+    static void desctroy( SysProcess** process );
 
 #ifdef _WIN32
     STARTUPINFO si_;
@@ -39,7 +47,7 @@ private:
 
 #endif
 
-    std::function<void( size_t )> callback;
+    prceoss_callback_t callback;
 
     void invoke();
 
