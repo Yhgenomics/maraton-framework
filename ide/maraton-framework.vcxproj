@@ -24,6 +24,7 @@
     <ClInclude Include="..\include\Buffer.hpp" />
     <ClInclude Include="..\include\CircleBuffer.hpp" />
     <ClInclude Include="..\include\ClusterSession.h" />
+    <ClInclude Include="..\include\Configuration.h" />
     <ClInclude Include="..\include\ExecutorSession.h" />
     <ClInclude Include="..\include\HTTP.h" />
     <ClInclude Include="..\include\HTTPHandler.h" />
@@ -68,6 +69,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\AsyncWorker.cpp" />
     <ClCompile Include="..\src\ClusterSession.cpp" />
+    <ClCompile Include="..\src\Configuration.cpp" />
     <ClCompile Include="..\src\ExecutorSession.cpp" />
     <ClCompile Include="..\src\HTTPHandler.cpp" />
     <ClCompile Include="..\src\HTTPSession.cpp" />
