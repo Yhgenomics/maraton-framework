@@ -1,5 +1,6 @@
 #include "Configuration.h"
 #include <stdio.h>
+#include <direct.h>
 
 std::string Configuration::get( std::string key )
 {
@@ -8,15 +9,28 @@ std::string Configuration::get( std::string key )
 
 Configuration::Configuration()
 {
+    char path[512] = { 0 };
+    auto p = _getcwd( path , 512 );
+
     FILE* file;
-    fopen_s(&file , "maraton.conf" , "r" );
+    fopen_s( &file , "maraton.conf" , "r" );
+
+    if ( file == NULL )
+    {
+        Logger::error( "can't not open maraton.conf" );
+        return;
+    }
+
     fseek( file , 0 , SEEK_END );
-    int len = ftell( file );
+    int len = ftell( file ) ;
     fseek( file , 0 , SEEK_SET );
 
-    char* config_dat = new char[len];
-    fread( config_dat , 1 , len , file );
+    char* json_string = new char[len+1];
+    memset( json_string , 0 , len + 1 );
+    fread( json_string , 1 , len , file );
     fclose( file );
 
-    this->config = nlohmann::json::parse( config_dat );
+    this->config = nlohmann::json::parse( json_string );
+
+    delete json_string;
 }
