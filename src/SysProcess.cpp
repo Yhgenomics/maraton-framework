@@ -146,13 +146,13 @@ void SysProcess::uv_process_exit_callback( uv_process_t * process , int64_t exit
     SysProcess* instance = static_cast< SysProcess* >( process->data );
     uv_close( ( uv_handle_t* )process , NULL );
     instance->callback( instance , exit_status );
-    uv_sem_post( &instance->sem );
+    //uv_sem_post( &instance->sem );
     //
 }
 
 SysProcess::SysProcess()
 {
-    uv_sem_init( &this->sem , 0 );
+    //uv_sem_init( &this->sem , 0 );
 }
 
 SysProcess::SysProcess( std::string  file, std::string args, std::string  directry, prceoss_callback_t on_finish )
@@ -220,7 +220,8 @@ void SysProcess::invoke()
         size_t len = strlen( this->args_ );
 
         int start_pos = 0;
-        /*while ( true )
+
+        while ( true )
         {
             if ( raw_args[start_pos] == ' ' )
             {
@@ -230,7 +231,7 @@ void SysProcess::invoke()
             {
                 break;
             }
-        }*/
+        }
 
         int row = 0;
         int col = 0;
@@ -250,19 +251,7 @@ void SysProcess::invoke()
                 col++;
             }
         }
-
-      /*  int list_size = list.size() + 1;
-      
-        memset( args , 0 , list_size );
-        for ( size_t i = 0; i < list.size(); i++ )
-        {
-            auto str_size = list[i].length();
-            args[i] = new char[str_size];
-            memset( args[i] , 0 , str_size );
-            
-            memcpy( args[i] , list[i].data() , str_size );
-            printf( "%s" , args[i] );
-        }*/
+         
         args[row+1] = NULL;
     }
    
@@ -282,8 +271,8 @@ void SysProcess::invoke()
 
 size_t SysProcess::wait_for_exit()
 { 
-    uv_sem_wait( &this->sem );
-    uv_sem_destroy( &this->sem );
+   // uv_sem_wait( &this->sem );
+    //uv_sem_destroy( &this->sem );
     return this->result;
 }
 
