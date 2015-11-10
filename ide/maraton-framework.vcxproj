@@ -75,6 +75,7 @@
     <ClCompile Include="..\src\Session.cpp" />
     <ClCompile Include="..\src\SysProcess.cpp" />
     <ClCompile Include="..\src\UVSockService.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9EC33A65-4F99-454B-B5F4-CA2698E37021}</ProjectGuid>
@@ -175,7 +176,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libuv_x64.lib;advapi32.lib;iphlpapi.lib;psapi.lib;shell32.lib;userenv.lib;ws2_32.lib;vld_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libuv_d.lib;advapi32.lib;iphlpapi.lib;psapi.lib;shell32.lib;userenv.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <OutputFile>$(PROJECTDIR)..\lib\$(TargetName)_d$(TargetExt)</OutputFile>

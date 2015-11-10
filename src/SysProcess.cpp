@@ -141,15 +141,24 @@ void SysProcess::uv_after_work_process_callback( uv_work_t * req , int status )
         instance->callback( instance , instance->result ); 
 }
 
+void SysProcess::uv_process_exit_callback( uv_process_t * process , int64_t exit_status , int term_signal )
+{
+    SysProcess* instance = static_cast< SysProcess* >( process->data );
+    uv_close( ( uv_handle_t* )process , NULL );
+    instance->callback( instance , exit_status );
+    uv_sem_post( &instance->sem );
+    //
+}
+
 SysProcess::SysProcess()
 {
     uv_sem_init( &this->sem , 0 );
 }
 
-SysProcess::SysProcess( std::string  file, std::string  args, std::string  directry, prceoss_callback_t on_finish )
+SysProcess::SysProcess( std::string  file, std::string args, std::string  directry, prceoss_callback_t on_finish )
     : SysProcess()
 {
-    std::string newArgs = " " + args;
+    std::string newArgs = " " +  args;
 
     this->file_ = new char[this->STR_LENGTH];
     this->args_ = new char[this->STR_LENGTH];
@@ -164,7 +173,7 @@ SysProcess::SysProcess( std::string  file, std::string  args, std::string  direc
     this->callback = on_finish;
 }
 
-SysProcess::SysProcess( std::string  file, std::string  args, prceoss_callback_t on_finish )
+SysProcess::SysProcess( std::string  file, std::string args, prceoss_callback_t on_finish )
     : SysProcess()
 {
     std::string newArgs = " " + args;
@@ -192,8 +201,83 @@ SysProcess::SysProcess( std::string  file, prceoss_callback_t on_finish )
 
 void SysProcess::invoke()
 { 
-    this->worker.data = this;
-    uv_queue_work( uv_default_loop() , &this->worker , SysProcess::uv_work_process_callback , SysProcess::uv_after_work_process_callback );
+    char** args = nullptr;
+
+    if ( args_ == nullptr )
+    {
+        args = new char*[1];
+        args[0] = NULL;
+    } 
+    else
+    {
+        args = new char*[128];
+        for ( size_t i = 0; i < 128; i++ )
+        {
+            args[i] = new char[512];
+            memset( args[i] , 0 , 512 );
+        }
+        auto raw_args = this->args_;
+        size_t len = strlen( this->args_ );
+
+        int start_pos = 0;
+        /*while ( true )
+        {
+            if ( raw_args[start_pos] == ' ' )
+            {
+                start_pos++;
+            }
+            else
+            {
+                break;
+            }
+        }*/
+
+        int row = 0;
+        int col = 0;
+        for ( int f = start_pos , e = start_pos; e < len; e++ )
+        {
+            if ( raw_args[e] == ' ')
+            {
+                col = 0;
+                row++;
+                //std::string str( raw_args + f , ( e - f + 1 ) );
+                //list.push_back( str );
+                //f = e;
+            }
+            else 
+            {
+                args[row][col] = raw_args[e];
+                col++;
+            }
+        }
+
+      /*  int list_size = list.size() + 1;
+      
+        memset( args , 0 , list_size );
+        for ( size_t i = 0; i < list.size(); i++ )
+        {
+            auto str_size = list[i].length();
+            args[i] = new char[str_size];
+            memset( args[i] , 0 , str_size );
+            
+            memcpy( args[i] , list[i].data() , str_size );
+            printf( "%s" , args[i] );
+        }*/
+        args[row+1] = NULL;
+    }
+   
+    auto loop = uv_default_loop();
+    this->options.exit_cb = SysProcess::uv_process_exit_callback;
+    this->options.file = this->file_;
+    this->options.args = args;
+    this->options.cwd = this->directory_;
+    this->child_req.data = this;
+
+    uv_spawn( loop , &this->child_req , &this->options );
+  
+    delete[] args;
+    //this->worker.data = this;
+    //uv_queue_work( uv_default_loop() , &this->worker , SysProcess::uv_work_process_callback , SysProcess::uv_after_work_process_callback );
 }
 
 size_t SysProcess::wait_for_exit()
@@ -211,11 +295,11 @@ void SysProcess::start()
 void SysProcess::kill()
 {
 
-    uv_cancel( ( uv_req_t*) &this->worker );
+    uv_process_kill( &this->child_req , 1 );
 
 #ifdef _WIN32
     
-    TerminateProcess( this->pi_.hProcess, -1 );
+    //TerminateProcess( this->pi_.hProcess, -1 );
 
 #else
 

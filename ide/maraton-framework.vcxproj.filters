@@ -173,5 +173,6 @@
     <ClCompile Include="..\src\SysProcess.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
 </Project>

@@ -34,6 +34,8 @@ public:
 
 private:
 
+    static void uv_process_exit_callback( uv_process_t* , int64_t exit_status , int term_signal );
+
     SysProcess();
     SysProcess( std::string  file , std::string  args , std::string  directry , prceoss_callback_t on_finish );
     SysProcess( std::string  file , std::string  args , prceoss_callback_t on_finish );
@@ -70,6 +72,9 @@ private:
     uv_sem_t sem;
 
     void* data_ = nullptr;
+
+    uv_process_t child_req;
+    uv_process_options_t options = { 0 };
 };
 
 #endif // !PROCESS_H_
