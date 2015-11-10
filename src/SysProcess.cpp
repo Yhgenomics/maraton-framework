@@ -144,10 +144,14 @@ void SysProcess::uv_after_work_process_callback( uv_work_t * req , int status )
 void SysProcess::uv_process_exit_callback( uv_process_t * process , int64_t exit_status , int term_signal )
 {
     SysProcess* instance = static_cast< SysProcess* >( process->data );
-    uv_close( ( uv_handle_t* )process , NULL );
-    instance->callback( instance , exit_status );
-    //uv_sem_post( &instance->sem );
-    //
+    uv_close( ( uv_handle_t* )process , SysProcess::uv_process_close_callback );
+    instance->callback( instance , exit_status ); 
+}
+
+void SysProcess::uv_process_close_callback( uv_handle_t * handle )
+{
+    SysProcess* instance = static_cast< SysProcess* >( handle->data );
+    SAFE_DELETE( instance );
 }
 
 SysProcess::SysProcess()
@@ -215,25 +219,31 @@ void SysProcess::invoke()
         {
             args[i] = new char[512];
             memset( args[i] , 0 , 512 );
+            args[i][0] = ' ';
         }
         auto raw_args = this->args_;
         size_t len = strlen( this->args_ );
 
         int start_pos = 0;
 
-        while ( true )
-        {
-            if ( raw_args[start_pos] == ' ' )
-            {
-                start_pos++;
-            }
-            else
-            {
-                break;
-            }
-        }
+        //while ( true )
+        //{
+        //    if ( raw_args[start_pos] == ' ' )
+        //    {
+        //        start_pos++;
+        //    }
+        //    else
+        //    {
+        //        break;
+        //    }
+        //}
 
+#ifdef _WIN32
         int row = 0;
+#else
+        int row = 0;
+#endif
+
         int col = 0;
         for ( int f = start_pos , e = start_pos; e < len; e++ )
         {

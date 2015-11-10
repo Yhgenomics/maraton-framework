@@ -35,6 +35,7 @@ public:
 private:
 
     static void uv_process_exit_callback( uv_process_t* , int64_t exit_status , int term_signal );
+    static void uv_process_close_callback( uv_handle_t* handle );
 
     SysProcess();
     SysProcess( std::string  file , std::string  args , std::string  directry , prceoss_callback_t on_finish );
