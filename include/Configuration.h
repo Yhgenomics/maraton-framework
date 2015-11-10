@@ -12,7 +12,7 @@
 #include <string>
 
 class Configuration
-    : Singleton<Configuration>
+    : public Singleton<Configuration>
 {
 public:
 
