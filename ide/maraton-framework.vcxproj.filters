@@ -141,6 +141,9 @@
     <ClInclude Include="..\include\SysProcess.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\AsyncWorker.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ClusterSession.cpp">
@@ -174,5 +177,8 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\src\AsyncWorker.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

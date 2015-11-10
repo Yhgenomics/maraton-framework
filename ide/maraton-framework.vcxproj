@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\android-ifaddrs.h" />
+    <ClInclude Include="..\include\AsyncWorker.h" />
     <ClInclude Include="..\include\Buffer.hpp" />
     <ClInclude Include="..\include\CircleBuffer.hpp" />
     <ClInclude Include="..\include\ClusterSession.h" />
@@ -65,6 +66,7 @@
     <ClInclude Include="..\include\Zlib.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\AsyncWorker.cpp" />
     <ClCompile Include="..\src\ClusterSession.cpp" />
     <ClCompile Include="..\src\ExecutorSession.cpp" />
     <ClCompile Include="..\src\HTTPHandler.cpp" />
