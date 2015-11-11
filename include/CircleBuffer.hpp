@@ -41,7 +41,7 @@ public:
             throw "[CircleBuffer.cpp] not enough buffer";
         }
 
-        if ( tail_ + len > this->buffer_length_ )
+        if ( ( tail_ + len ) > this->buffer_length_ )
         {
             char* ptail = this->circle_buffer_ + this->tail_;
             int delta_len = this->buffer_length_ - tail_;
