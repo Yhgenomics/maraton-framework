@@ -214,7 +214,9 @@ void UVSockService::uv_write_cb_process( uv_write_t * req, int status )
     {   
         return;
     } 
+
+    char* buffer_data = static_cast< char* >( req->data );
     
-    SAFE_DELETE( req->write_buffer.base );
+    SAFE_DELETE( buffer_data );
     SAFE_DELETE( req );
 }
