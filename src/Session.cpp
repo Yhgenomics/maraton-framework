@@ -32,8 +32,6 @@ void Session::send( const char * data, int len )
     memcpy( p_buf.base , data, len );
     p_buf.len = len;
 
-    write_req_->data = p_buf.base;
-
     int result = 1;
     int try_count = 0;
 

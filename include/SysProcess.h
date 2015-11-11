@@ -68,8 +68,6 @@ private:
 
     int result = 0;
 
-    uv_work_t worker;
-
     uv_sem_t sem;
 
     void* data_ = nullptr;

@@ -15,7 +15,7 @@ std::string Configuration::get( std::string key )
 Configuration::Configuration()
 {
     char path[512] = { 0 };
-    auto p = getcwd( path , 512 );
+    getcwd( path , 512 );
 
     FILE* file;
     file = fopen( "maraton.conf" , "r" );

@@ -245,7 +245,7 @@ void SysProcess::invoke()
 #endif
 
         int col = 0;
-        for ( int f = start_pos , e = start_pos; e < len; e++ )
+        for ( int e = start_pos; e < len; e++ )
         {
             if ( raw_args[e] == ' ')
             {

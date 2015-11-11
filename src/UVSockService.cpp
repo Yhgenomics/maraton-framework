@@ -77,7 +77,7 @@ bool UVSockService::connect( std::string ip, int port )
 
     is_connecting = true;
 
-    return true;
+    return result == 0;
 }
 
 void UVSockService::run()
@@ -215,6 +215,6 @@ void UVSockService::uv_write_cb_process( uv_write_t * req, int status )
         return;
     } 
     
-    SAFE_DELETE( req->data );
+    SAFE_DELETE( req->write_buffer.base );
     SAFE_DELETE( req );
 }
