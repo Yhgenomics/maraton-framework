@@ -1,6 +1,10 @@
 #include "Configuration.h"
 #include <stdio.h>
+#ifdef _WIN32
 #include <direct.h>
+#else
+#include <unistd.h>
+#endif
 
 std::string Configuration::get( std::string key )
 {
