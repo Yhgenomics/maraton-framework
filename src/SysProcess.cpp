@@ -54,92 +54,7 @@ SysProcess * SysProcess::create( std::string file , prceoss_callback_t on_finish
 {
     auto ret = new SysProcess( file , on_finish );
     return ret;
-}
-
-void SysProcess::uv_work_process_callback( uv_work_t * req )
-{
-    SysProcess* instance = static_cast< SysProcess* >( req->data );
-
-#ifdef _WIN32
-
-    instance->pi_ = { };
-    instance->si_ = { sizeof( instance->si_ ) };
-    instance->si_.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-    instance->si_.wShowWindow = SW_HIDE; 
-   
-    //UUID uuid;
-    //UuidCreate( &uuid );
-    //char uuid_str[128] = { 0 };
-    //sprintf( uuid_str , "%08X%08X%08X%08X" , uuid.Data1 , uuid.Data2 , uuid.Data3 , uuid.Data4 );
-    //HANDLE hConsoleRedirect = CreateFile(
-    //    uuid_str ,
-    //    GENERIC_WRITE ,
-    //    FILE_SHARE_READ | FILE_SHARE_WRITE ,
-    //    NULL ,
-    //    OPEN_ALWAYS ,
-    //    FILE_ATTRIBUTE_NORMAL ,
-    //    NULL
-    //    );
-    //instance->si_.hStdOutput = hConsoleRedirect;
-
-    if ( !CreateProcess(
-        instance->file_ ,
-        instance->args_ ,
-        NULL ,
-        NULL ,
-        FALSE ,
-        CREATE_NO_WINDOW | CREATE_NEW_CONSOLE ,
-        NULL ,
-        instance->directory_ ,
-        &instance->si_ ,
-        &instance->pi_ ) )
-    {
-        instance->result = GetLastError();
-        uv_sem_post( &instance->sem );
-        return;
-    }  
-
-    WaitForSingleObject( instance->pi_.hProcess , INFINITE );
-    DWORD dwExitCode;
-    GetExitCodeProcess( instance->pi_.hProcess , &dwExitCode );
-    instance->result = ( size_t )dwExitCode;
-    CloseHandle( instance->pi_.hThread );
-    CloseHandle( instance->pi_.hProcess );
-
-    memset( &instance->si_ , 0 , sizeof( instance->si_ ) );
-    memset( &instance->pi_ , 0 , sizeof( instance->pi_ ) );
-
-    //DeleteFile( uuid_str );
-    //FILE* io_file;
-
-#else
- 
-    char tmp_buffer[10240] = { 0 };
-    int file_length = strlen( instance->file_ );
-    int args_length = strlen( instance->args_ );
-    memcpy( tmp_buffer , instance->file_ , file_length );
-    memcpy( tmp_buffer + file_length , " " , 1 );
-    memcpy( tmp_buffer + file_length + 1 , instance->args_ , args_length );
-     
-    instance->p_stream = popen( tmp_buffer , "r" );
-
-    fread( instance->output_buffer_  , sizeof( char ) , sizeof( instance->output_buffer_ ), instance->p_stream );
-
-    pclose( instance->p_stream );
-
-#endif // _WIN32
-
-    uv_sem_post( &instance->sem );
-
-}
-
-void SysProcess::uv_after_work_process_callback( uv_work_t * req , int status )
-{
-    SysProcess* instance = static_cast< SysProcess* >( req->data );
-
-    if ( instance!=nullptr && instance->callback != nullptr )
-        instance->callback( instance , instance->result ); 
-}
+}  
 
 void SysProcess::uv_process_exit_callback( uv_process_t * process , int64_t exit_status , int term_signal )
 {
@@ -152,6 +67,32 @@ void SysProcess::uv_process_close_callback( uv_handle_t * handle )
 {
     SysProcess* instance = static_cast< SysProcess* >( handle->data );
     SAFE_DELETE( instance );
+}
+
+void SysProcess::uv_process_alloc_buffer( uv_handle_t * handle , size_t suggested_size , uv_buf_t * buf )
+{
+    *buf = uv_buf_init( ( char* )malloc( suggested_size ) , suggested_size );
+}
+
+void SysProcess::uv_prcoess_read_stream( uv_stream_t * stream , ssize_t nread , const uv_buf_t * buf )
+{
+    SysProcess* inst = static_cast< SysProcess* > ( stream->data );
+
+    if ( nread < 0 )
+    {
+        if ( nread == UV_EOF )
+        {
+            // end of file
+            uv_close( ( uv_handle_t * )&inst->pipe_ , NULL );
+        }
+
+        return;
+    } 
+
+    inst->std_out_ = std::string( buf->base , nread );
+
+    if ( buf->base )
+        delete buf->base;
 }
 
 SysProcess::SysProcess()
@@ -205,6 +146,7 @@ SysProcess::SysProcess( std::string  file, prceoss_callback_t on_finish )
 
 void SysProcess::invoke()
 { 
+    int r;
     char** args = nullptr;
 
     if ( args_ == nullptr )
@@ -224,19 +166,7 @@ void SysProcess::invoke()
         auto raw_args = this->args_;
         size_t len = strlen( this->args_ );
 
-        int start_pos = 0;
-
-        //while ( true )
-        //{
-        //    if ( raw_args[start_pos] == ' ' )
-        //    {
-        //        start_pos++;
-        //    }
-        //    else
-        //    {
-        //        break;
-        //    }
-        //}
+        int start_pos = 0; 
 
 #ifdef _WIN32
         int row = 0;
@@ -264,19 +194,44 @@ void SysProcess::invoke()
          
         args[row+1] = NULL;
     }
-   
     auto loop = uv_default_loop();
+    this->pipe_ = { 0 };
+
+    r = uv_pipe_init( loop , &this->pipe_ , 0 );
+     
+    this->pipe_.data = this;
+    
     this->options.exit_cb = SysProcess::uv_process_exit_callback;
     this->options.file = this->file_;
     this->options.args = args;
     this->options.cwd = this->directory_;
     this->child_req.data = this;
 
-    uv_spawn( loop , &this->child_req , &this->options );
-  
+    this->options.stdio_count = 3;
+    uv_stdio_container_t child_stdio[3];
+
+    child_stdio[0].flags = UV_IGNORE;// ( uv_stdio_flags )( UV_CREATE_PIPE | UV_READABLE_PIPE );
+
+    child_stdio[1].flags = ( uv_stdio_flags )( UV_CREATE_PIPE | UV_WRITABLE_PIPE );
+    child_stdio[1].data.stream = ( uv_stream_t* )&this->pipe_;
+
+    child_stdio[2].flags = UV_IGNORE;
+
+    this->options.stdio = child_stdio;
+    
+    r  = uv_spawn( loop , &this->child_req , &this->options );
+    if ( r != 0 )
+    {
+        printf( "uv_spawn: %s\r\n" , uv_strerror( r ) );
+    }
+
+    r = uv_read_start( ( uv_stream_t* )&this->pipe_ , SysProcess::uv_process_alloc_buffer , SysProcess::uv_prcoess_read_stream );
+    if ( r != 0 )
+    {
+        printf( "uv_read_start: %s\r\n" , uv_strerror( r ) );
+    }
+
     delete[] args;
-    //this->worker.data = this;
-    //uv_queue_work( uv_default_loop() , &this->worker , SysProcess::uv_work_process_callback , SysProcess::uv_after_work_process_callback );
 }
 
 size_t SysProcess::wait_for_exit()
