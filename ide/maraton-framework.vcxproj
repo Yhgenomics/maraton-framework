@@ -45,6 +45,7 @@
     <ClInclude Include="..\include\SessionManager.hpp" />
     <ClInclude Include="..\include\Singleton.hpp" />
     <ClInclude Include="..\include\stdint-msvc2008.h" />
+    <ClInclude Include="..\include\SyncWorker.h" />
     <ClInclude Include="..\include\SysProcess.h" />
     <ClInclude Include="..\include\Timer.hpp" />
     <ClInclude Include="..\include\tree.h" />
@@ -77,6 +78,7 @@
     <ClCompile Include="..\src\Message.cpp" />
     <ClCompile Include="..\src\RESTSession.cpp" />
     <ClCompile Include="..\src\Session.cpp" />
+    <ClCompile Include="..\src\SyncWorker.cpp" />
     <ClCompile Include="..\src\SysProcess.cpp" />
     <ClCompile Include="..\src\UVSockService.cpp" />
     <ClCompile Include="main.cpp" />

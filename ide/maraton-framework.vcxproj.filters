@@ -147,6 +147,9 @@
     <ClInclude Include="..\include\Configuration.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\SyncWorker.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ClusterSession.cpp">
@@ -184,6 +187,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Configuration.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SyncWorker.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
