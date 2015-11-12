@@ -6,6 +6,12 @@
 
 #include "maraton.h"
 
+#ifdef _WIN32
+#include <direct.h>
+#else
+#include <unistd.h>
+#endif
+
 SysProcess::~SysProcess()
 {
 
@@ -151,8 +157,13 @@ void SysProcess::invoke()
 
     if ( args_ == nullptr )
     {
-        args = new char*[1];
-        args[0] = NULL;
+        char path[512] = { 0 };
+        getcwd( path , 512 );
+        args = new char*[2];
+        args[0] = new char[strlen( path ) + 1];
+        memset( args[0] , 0 , strlen( path ) + 1 );
+        memcpy( args[0] , path , strlen( path ) );
+        args[1] = NULL;
     } 
     else
     {
@@ -180,10 +191,7 @@ void SysProcess::invoke()
             if ( raw_args[e] == ' ')
             {
                 col = 0;
-                row++;
-                //std::string str( raw_args + f , ( e - f + 1 ) );
-                //list.push_back( str );
-                //f = e;
+                row++; 
             }
             else 
             {
