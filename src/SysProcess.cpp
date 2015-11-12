@@ -210,9 +210,11 @@ void SysProcess::invoke()
 
             if ( raw_args[e] == ' ' && !has_dot)
             {
-                printf( "Asrg:%s\r\n", args[row] );
+                printf( "Args:%s\r\n", args[row] );
                 col = 0;
                 row++; 
+                args[row][col] = ' ';
+                col = 1;
             }
             else 
             {
