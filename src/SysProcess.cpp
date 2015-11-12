@@ -179,8 +179,8 @@ void SysProcess::invoke()
     } 
     else
     {
-        args = new char*[128];
-        for ( size_t i = 0; i < 128; i++ )
+        args = new char*[64];
+        for ( size_t i = 0; i < 64; i++ )
         {
             args[i] = new char[512];
             memset( args[i] , 0 , 512 );
@@ -196,7 +196,7 @@ void SysProcess::invoke()
 #else
         int row = 0;
 #endif
-
+        printf( "File:%s\r\n" , this->file_ );
         int col = 0;
         bool has_dot = false;
         for ( int e = start_pos; e < len; e++ )
@@ -211,6 +211,7 @@ void SysProcess::invoke()
 
             if ( raw_args[e] == ' ' && !has_dot)
             {
+                printf( "Asrg:%s\r\n", args[row] );
                 col = 0;
                 row++; 
             }
