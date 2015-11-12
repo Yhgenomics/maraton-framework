@@ -155,21 +155,23 @@ void SysProcess::invoke()
     int r;
     char** args = nullptr;
 
-    if ( this->directory_ == nullptr )
-    {
-        char path[512] = { 0 };
-        getcwd( path , 512 );
-        int path_len = strlen( path );
-        this->directory_ = new char[path_len + 1];
-        memset( this->directory_ , 0 , path_len + 1 );
-        memcpy( this->directory_ , path , strlen( path ) );
-    }
+    //if ( this->directory_ == nullptr )
+    //{
+    //    char path[512] = { 0 };
+    //    getcwd( path , 512 );
+    //    int path_len = strlen( path );
+    //    this->directory_ = new char[path_len + 1];
+    //    memset( this->directory_ , 0 , path_len + 1 );
+    //    memcpy( this->directory_ , path , strlen( path ) );
+    //}
 
     if ( args_ == nullptr )
     {
         //char path[512] = { 0 };
         //getcwd( path , 512 );
         //args = new char*[2];
+        //args[0] = ' ';
+        //args[1] = NULL;
         //args[0] = new char[strlen( path ) + 1];
         //memset( args[0] , 0 , strlen( path ) + 1 );
         //memcpy( args[0] , path , strlen( path ) );
@@ -196,9 +198,18 @@ void SysProcess::invoke()
 #endif
 
         int col = 0;
+        bool has_dot = false;
         for ( int e = start_pos; e < len; e++ )
         {
-            if ( raw_args[e] == ' ')
+            if ( raw_args[e] == '\'')
+            {
+                if ( has_dot )
+                    has_dot = false;
+                else
+                    has_dot = true;
+            }
+
+            if ( raw_args[e] == ' ' && !has_dot)
             {
                 col = 0;
                 row++; 
