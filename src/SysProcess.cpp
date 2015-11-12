@@ -109,7 +109,7 @@ SysProcess::SysProcess()
 SysProcess::SysProcess( std::string  file, std::string args, std::string  directry, prceoss_callback_t on_finish )
     : SysProcess()
 {
-    std::string newArgs = " " +  args;
+    std::string newArgs = args;
 
     this->file_ = new char[this->STR_LENGTH];
     this->args_ = new char[this->STR_LENGTH];
@@ -127,7 +127,7 @@ SysProcess::SysProcess( std::string  file, std::string args, std::string  direct
 SysProcess::SysProcess( std::string  file, std::string args, prceoss_callback_t on_finish )
     : SysProcess()
 {
-    std::string newArgs = " " + args;
+    std::string newArgs =  args;
 
     this->file_ = new char[this->STR_LENGTH];
     this->args_ = new char[this->STR_LENGTH]; 
