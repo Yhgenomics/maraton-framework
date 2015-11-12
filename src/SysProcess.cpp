@@ -155,6 +155,16 @@ void SysProcess::invoke()
     int r;
     char** args = nullptr;
 
+    if ( this->directory_ == nullptr )
+    {
+        char path[512] = { 0 };
+        getcwd( path , 512 );
+        int path_len = strlen( path );
+        this->directory_ = new char[path_len + 1];
+        memset( this->directory_ , 0 , path_len + 1 );
+        memcpy( this->directory_ , path , strlen( path ) );
+    }
+
     if ( args_ == nullptr )
     {
         //char path[512] = { 0 };
