@@ -153,7 +153,7 @@ SysProcess::SysProcess( std::string  file, prceoss_callback_t on_finish )
 void SysProcess::invoke()
 { 
     int r;
-    char** args = nullptr;
+    char** args = NULL;
 
     //if ( this->directory_ == nullptr )
     //{
@@ -164,7 +164,7 @@ void SysProcess::invoke()
     //    memset( this->directory_ , 0 , path_len + 1 );
     //    memcpy( this->directory_ , path , strlen( path ) );
     //}
-
+    printf( "File:%s\r\n" , this->file_ );
     if ( args_ == nullptr )
     {
         //char path[512] = { 0 };
@@ -196,7 +196,6 @@ void SysProcess::invoke()
 #else
         int row = 0;
 #endif
-        printf( "File:%s\r\n" , this->file_ );
         int col = 0;
         bool has_dot = false;
         for ( int e = start_pos; e < len; e++ )
@@ -222,6 +221,7 @@ void SysProcess::invoke()
             }
         }
          
+        printf( "Args:%s\r\n" , args[row] );
         args[row+1] = NULL;
     }
     auto loop = uv_default_loop();

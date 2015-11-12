@@ -18,23 +18,11 @@
 //
 //int main()
 //{
-//    SyncWorker::create_loop( 1000 , [] ( SyncWorker* p ) { 
-//        printf( "%s for %ld \r\n", p->data(), p->loop_count() );
-//
-//        if ( p->loop_count() % 10 == 0 )
-//        {
-//            SyncWorker::create_once( [] ( SyncWorker* p )
-//            {
-//                printf( "%s for %ld \r\n" , p->data() , p->loop_count() );
-//            } , "I'm once worker" );
-//        }
-//
-//
-//    } ,"I'm 100 loop worker");
+//    
 //    
 // 
-//    /*auto r = SysProcess::create( "D:\\ModerCPPLearn.exe" ,"a b c e d f g", CB_1 );
-//    r->start();*/
+//    auto r = SysProcess::create( "/bin/sh" ,"-c 'adef efa efef adfasd efrefe aaa'", CB_1 );
+//    r->start();
 //
 //    while ( 1 )
 //    {
