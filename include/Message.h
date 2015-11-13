@@ -17,10 +17,10 @@ class Message
 {
 public :
 
-    //deserilize
+    // Deserilization
     Message( const std::string json_str );
 
-    //serilize
+    // Serilization
     Message( const std::string version , size_t command, size_t status);
 
     Message( Message& message);
@@ -51,7 +51,6 @@ protected:
     ClusterSession* owner_ = nullptr;
 
     nlohmann::json raw_data_;
-
 };
 
 #endif //!MESSAGE_H_ 

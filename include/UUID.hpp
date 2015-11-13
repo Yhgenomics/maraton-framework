@@ -24,7 +24,8 @@ public:
         char *p = buf;
         int n;
 
-        for ( n = 0; n < 16; ++n )
+        // Magic number
+        for ( n = 0; n < UUID_CHARSET_LEN; ++n )
         {
             int seed = rand() % 255;
             switch ( n )
@@ -52,6 +53,7 @@ public:
 private:
 
     const static int UUID_LEN = 37;
+    const static int UUID_CHARSET_LEN = 16;
 
     UUID() {};
     ~UUID() {};

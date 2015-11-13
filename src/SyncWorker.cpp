@@ -1,7 +1,9 @@
 #include "SyncWorker.h"
 #include "maraton.h"
 
-void SyncWorker::create_loop( size_t loop_time , syncworker_callback_t callback , void * data )
+void SyncWorker::create_loop( const size_t loop_time , 
+                              const syncworker_callback_t callback , 
+                              void * data )
 {
     SyncWorker* worker = new SyncWorker();
     worker->callback_ = callback;
@@ -10,7 +12,8 @@ void SyncWorker::create_loop( size_t loop_time , syncworker_callback_t callback 
     worker->start();
 }
 
-void SyncWorker::create_once( syncworker_callback_t callback , void * data )
+void SyncWorker::create_once( const syncworker_callback_t callback ,
+                              void * data )
 {
     SyncWorker* worker = new SyncWorker();
     worker->callback_ = callback;

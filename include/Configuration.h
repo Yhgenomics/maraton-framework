@@ -25,6 +25,8 @@ private:
 
     nlohmann::json config;
     friend class Singleton<Configuration>;
+    
+    static const int MAX_PATH_LEN = 512;
 };
 
 #endif //!CONFIGURATION_H_ 

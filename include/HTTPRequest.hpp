@@ -35,7 +35,8 @@ public:
 
     map<string, string> header()
     {
-        return map<string, string>( this->header_.begin(), this->header_.end() );
+        return map<string, string>( this->header_.begin(),
+                                    this->header_.end() );
     }
 
     string body()
@@ -133,7 +134,8 @@ public:
                     phead = pdata;
                     state = HTTPPARSESTATE::HEADER_KEY;
 
-                    this->header_.insert( make_pair( string( key_ ), string( value_ ) ) );
+                    this->header_.insert( make_pair( string( key_ ), 
+                                          string( value_ ) ) );
 
                     sequeue.clear();
                     break;

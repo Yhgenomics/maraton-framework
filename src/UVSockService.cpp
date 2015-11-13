@@ -29,8 +29,8 @@ bool UVSockService::listen( std::string ip, int port )
 
     uv_tcp_bind( socket_, ( const struct sockaddr* )&addr_in, 0 );
     int result = uv_listen( ( uv_stream_t* )socket_, 
-                       10000, 
-                       UVSockService::uv_connection_cb_process );
+                            10000, 
+                            UVSockService::uv_connection_cb_process );
 
     listen_data* data = new listen_data();
 
@@ -61,7 +61,7 @@ bool UVSockService::connect( std::string ip, int port )
 
     uv_tcp_init( this->loop_, socket_ ); 
 
-    //mem leak
+    // mem leak
     uv_connect_t* connect = ( uv_connect_t* ) malloc( sizeof( uv_connect_t ) );
 
     uv_ip4_addr( ip.c_str(), port, &addr_in );
@@ -102,7 +102,6 @@ void UVSockService::uv_connection_cb_process( uv_stream_t * server, int status )
     uv_tcp_t *client = new uv_tcp_t();
     uv_tcp_init( uv_default_loop(), client );
     
-
     if ( uv_accept( server, ( uv_stream_t* ) client ) == 0 ) 
     { 
         Session* session = nullptr;
@@ -138,7 +137,6 @@ void UVSockService::uv_connection_cb_process( uv_stream_t * server, int status )
     {
         uv_close( ( uv_handle_t* ) client, UVSockService::uv_close_cb_process );
     }
-
 }
 
 void UVSockService::uv_connected_cb_process( uv_connect_t * req, int status )
@@ -176,7 +174,9 @@ void UVSockService::uv_connected_cb_process( uv_connect_t * req, int status )
 
 }
 
-void UVSockService::uv_alloc_cb_process( uv_handle_t * handle, size_t suggested_size, uv_buf_t * buf )
+void UVSockService::uv_alloc_cb_process( uv_handle_t * handle, 
+                                         size_t suggested_size,
+                                         uv_buf_t * buf )
 {
     Session* session = static_cast< Session* >( handle->data );
 
@@ -185,7 +185,9 @@ void UVSockService::uv_alloc_cb_process( uv_handle_t * handle, size_t suggested_
     memset( buf->base , 0 , buf->len );
 }
 
-void UVSockService::uv_read_cb_process( uv_stream_t * stream, ssize_t nread, const uv_buf_t * buf )
+void UVSockService::uv_read_cb_process( uv_stream_t * stream, 
+                                        ssize_t nread,
+                                        const uv_buf_t * buf )
 {
     Session* session = static_cast< Session* >( stream->data );
 

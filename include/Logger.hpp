@@ -35,6 +35,7 @@ public:
 #endif      
 
     }
+
     template<typename ...Types>
     static void error( const char* fmt, Types... args )
     {

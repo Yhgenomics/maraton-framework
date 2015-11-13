@@ -14,8 +14,9 @@ std::string Configuration::get( std::string key )
 
 Configuration::Configuration()
 {
-    char path[512] = { 0 };
-    getcwd( path , 512 );
+    // Magic number
+    char path[MAX_PATH_LEN] = { 0 };
+    getcwd( path , MAX_PATH_LEN );
 
     FILE* file;
     file = fopen( "maraton.conf" , "r" );

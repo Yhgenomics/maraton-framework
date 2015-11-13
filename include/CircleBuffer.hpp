@@ -83,7 +83,8 @@ public:
             int end_len = this->buffer_length_ - this->head_;
             memcpy( result, phead + result_pos, end_len );
             result_pos += this->buffer_length_ - this->head_;
-            memcpy( result + result_pos, this->circle_buffer_, ( len - end_len ) );
+            memcpy( result + result_pos, this->circle_buffer_, 
+                    ( len - end_len ) );
         }
         // circle buffer contains all data inside
         else

@@ -17,8 +17,12 @@ public:
 
     typedef std::function<void( SyncWorker* )> syncworker_callback_t;
 
-    static void create_loop( size_t loop_time , syncworker_callback_t  callback , void* data );
-    static void create_once( syncworker_callback_t  callback , void* data );
+    static void create_loop( const size_t loop_time , 
+                             const syncworker_callback_t  callback , 
+                             void* data );
+
+    static void create_once( const syncworker_callback_t callback , 
+                             void* data );
 
     void*       data() { return this->data_; };
     void        data( void* value ) { this->data_ = value; };

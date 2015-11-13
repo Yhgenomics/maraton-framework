@@ -38,7 +38,6 @@ public:
 
     bool parse( const char* data, int len )
     { 
-
         if ( request_->parse( data, len ) )
         {
 
@@ -55,7 +54,7 @@ public:
         return false;
     }
 
-    void request( callback_request_t  cb )
+    void request( const callback_request_t  cb )
     {
         this->callback_requst_t_list_.push_back( cb );
     };
@@ -65,16 +64,15 @@ public:
         this->response_callback_ = cb; 
     };
 
-    void get( string path, callback_request_response_t cb)
+    void get( const string path, const callback_request_response_t cb)
     {
         this->add_on_request_cb( path, "GET", cb );
     }
 
-    void post( string path, callback_request_response_t cb )
+    void post( const string path, const callback_request_response_t cb )
     {
         this->add_on_request_cb( path, "POST", cb );
     }
-
 
 private:
 
@@ -91,8 +89,9 @@ private:
     HTTPRequest* request_;
     callback_response_t response_callback_ = nullptr;
 
-    void add_on_request_cb( string path, std::string method, callback_request_response_t cb )
+    void add_on_request_cb( const string path, const std::string method, const callback_request_response_t cb )
     {
+        // Potential memory leaks
         RequestData* rp = new RequestData();
         rp->callback = cb;
         rp->path = path;
@@ -109,7 +108,7 @@ private:
         request_data_list_.push_back( rp );
     };
 
-    void dispatch( HTTPRequest* req )
+    void dispatch(  HTTPRequest* req )
     {
         bool exist = false;
 

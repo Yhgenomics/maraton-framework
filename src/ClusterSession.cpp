@@ -13,48 +13,48 @@ ClusterSession::~ClusterSession()
 void ClusterSession::recv( const char* data, int len )
 {
     circle_buffer_.push( data, len );
+
     do
     {
-
         switch ( this->read_state_ )
         {
-        case ES_READSTATE::FLAG:
-        {
-            if ( this->try_read_flag() )
-            {
-                this->read_state_ = ES_READSTATE::HEAD;
-                continue;
-            } 
+            case ES_READSTATE::FLAG:
+                {
+                    if ( this->try_read_flag() )
+                    {
+                        this->read_state_ = ES_READSTATE::HEAD;
+                        continue;
+                    }
 
-            return;
-        }
-        break;
+                    return;
+                }
+                break;
 
         case ES_READSTATE::HEAD:
-        {
-            if ( this->try_read_head() )
             {
-                this->read_state_ = ES_READSTATE::BODY;
-                continue;
-            }
+                if ( this->try_read_head() )
+                {
+                    this->read_state_ = ES_READSTATE::BODY;
+                    continue;
+                }
 
-            return;
-        }
-        break;
+                return;
+            }
+            break;
 
         case ES_READSTATE::BODY:
-        {
-            if ( this->try_read_body() )
             {
-                this->read_state_ = ES_READSTATE::FLAG;
-                continue;
+                if ( this->try_read_body() )
+                {
+                    this->read_state_ = ES_READSTATE::FLAG;
+                    continue;
+                }
+                return;
             }
-            return;
-        }
-        break;
+            break;
 
         default:
-        break;
+            break;
         }
 
     } 
@@ -126,7 +126,6 @@ void ClusterSession::send( Message * message )
 {
     auto buf = message->bytes();
     this->send( buf.raw(), buf.length() );
-     
 }
 
 bool ClusterSession::try_read_flag()
@@ -148,9 +147,8 @@ bool ClusterSession::try_read_flag()
 
 bool ClusterSession::try_read_head()
 {
-
-    //0-1 Compressed Length
-    //2-3 Oringal Length
+    // 0-1 Compressed Length
+    // 2-3 Oringal Length
     std::unique_ptr<char> data( this->circle_buffer_.pop( sizeof( short ) * 2 ));
 
     if ( data == nullptr )
@@ -178,7 +176,6 @@ bool ClusterSession::try_read_body()
     }
 
     auto raw_data = this->compressor_.uncompress( data.get() , this->compressed_length_ );
-    
     
     Message message( std::string( raw_data.raw(), raw_data.length() ) );
     message.owner( this );

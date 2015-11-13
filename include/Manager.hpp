@@ -24,6 +24,7 @@ public:
 
     virtual bool pop( T* instance )
     {
+        // Rework and improve the code 
         typename std::vector<T*>::iterator itr = this->instance_.begin();
 
         while ( itr != this->instance_.end() )
@@ -46,9 +47,9 @@ protected:
 
     std::vector<T*> instances() 
     {
-        std::vector<T*> vret( this->instance_.begin(), this->instance_.end() );
+        std::vector<T*> vec_return( this->instance_.begin(), this->instance_.end() );
 
-        return vret;
+        return vec_return;
     }
 
     std::vector<T*> instance_;

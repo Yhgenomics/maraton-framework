@@ -25,6 +25,9 @@ public:
      
     TT* create( uv_tcp_t* conn )
     {
+        // Potential memory leaks
+        //unique_ptr<TT> t;
+        //shared_ptr<TT>
         TT* t = new TT( conn );
         this->push( t );
         invoke_callbacK( t );

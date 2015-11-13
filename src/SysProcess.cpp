@@ -44,25 +44,31 @@ void SysProcess::desctroy( SysProcess ** process )
     }
 }
 
-SysProcess * SysProcess::create( std::string file , std::string args , std::string directry , prceoss_callback_t on_finish )
+SysProcess * SysProcess::create( std::string file , std::string args , 
+                                 std::string directry ,
+                                 prceoss_callback_t on_finish )
 {
     auto ret = new SysProcess( file , args , directry , on_finish );
     return ret;
 }
 
-SysProcess * SysProcess::create( std::string file , std::string args , prceoss_callback_t on_finish )
+SysProcess * SysProcess::create( std::string file , std::string args ,
+                                 prceoss_callback_t on_finish )
 {
     auto ret = new SysProcess( file , args ,  on_finish );
     return ret;
 }
 
-SysProcess * SysProcess::create( std::string file , prceoss_callback_t on_finish )
+SysProcess * SysProcess::create( std::string file ,
+                                 prceoss_callback_t on_finish )
 {
     auto ret = new SysProcess( file , on_finish );
     return ret;
 }  
 
-void SysProcess::uv_process_exit_callback( uv_process_t * process , int64_t exit_status , int term_signal )
+void SysProcess::uv_process_exit_callback( uv_process_t * process , 
+                                           int64_t exit_status , 
+                                           int term_signal )
 {
     SysProcess* instance = static_cast< SysProcess* >( process->data );
     uv_close( ( uv_handle_t* )process , SysProcess::uv_process_close_callback );
@@ -75,12 +81,16 @@ void SysProcess::uv_process_close_callback( uv_handle_t * handle )
     SAFE_DELETE( instance );
 }
 
-void SysProcess::uv_process_alloc_buffer( uv_handle_t * handle , size_t suggested_size , uv_buf_t * buf )
+void SysProcess::uv_process_alloc_buffer( uv_handle_t * handle , 
+                                          size_t suggested_size ,
+                                          uv_buf_t * buf )
 {
     *buf = uv_buf_init( ( char* )malloc( suggested_size ) , suggested_size );
 }
 
-void SysProcess::uv_prcoess_read_stream( uv_stream_t * stream , ssize_t nread , const uv_buf_t * buf )
+void SysProcess::uv_prcoess_read_stream( uv_stream_t * stream , 
+                                         ssize_t nread , 
+                                         const uv_buf_t * buf )
 {
     SysProcess* inst = static_cast< SysProcess* > ( stream->data );
 
@@ -106,7 +116,9 @@ SysProcess::SysProcess()
     //uv_sem_init( &this->sem , 0 );
 }
 
-SysProcess::SysProcess( std::string  file, std::string args, std::string  directry, prceoss_callback_t on_finish )
+SysProcess::SysProcess( std::string  file, std::string args, 
+                        std::string  directry,
+                        prceoss_callback_t on_finish )
     : SysProcess()
 {
     std::string newArgs = args;
@@ -124,7 +136,8 @@ SysProcess::SysProcess( std::string  file, std::string args, std::string  direct
     this->callback = on_finish;
 }
 
-SysProcess::SysProcess( std::string  file, std::string args, prceoss_callback_t on_finish )
+SysProcess::SysProcess( std::string  file, std::string args, 
+                        prceoss_callback_t on_finish )
     : SysProcess()
 {
     std::string newArgs =  args;
@@ -242,7 +255,8 @@ void SysProcess::invoke()
     this->options.stdio_count = 3;
     uv_stdio_container_t child_stdio[3];
 
-    child_stdio[0].flags = UV_IGNORE;// ( uv_stdio_flags )( UV_CREATE_PIPE | UV_READABLE_PIPE );
+    // ( uv_stdio_flags )( UV_CREATE_PIPE | UV_READABLE_PIPE );
+    child_stdio[0].flags = UV_IGNORE;
 
     child_stdio[1].flags = ( uv_stdio_flags )( UV_CREATE_PIPE | UV_WRITABLE_PIPE );
     child_stdio[1].data.stream = ( uv_stream_t* )&this->pipe_;
@@ -257,7 +271,9 @@ void SysProcess::invoke()
         printf( "uv_spawn: %s\r\n" , uv_strerror( r ) );
     }
 
-    r = uv_read_start( ( uv_stream_t* )&this->pipe_ , SysProcess::uv_process_alloc_buffer , SysProcess::uv_prcoess_read_stream );
+    r = uv_read_start( ( uv_stream_t* )&this->pipe_ ,
+                       SysProcess::uv_process_alloc_buffer , 
+                       SysProcess::uv_prcoess_read_stream );
     if ( r != 0 )
     {
         printf( "uv_read_start: %s\r\n" , uv_strerror( r ) );

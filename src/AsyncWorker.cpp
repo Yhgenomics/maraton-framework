@@ -1,7 +1,8 @@
 #include "AsyncWorker.h"
 #include "maraton.h"
 
-AsyncWorker * AsyncWorker::create( callback_t acting , callback_t finish , void * data )
+AsyncWorker * AsyncWorker::create( callback_t acting ,
+                                   callback_t finish , void * data )
 {
     auto r = new AsyncWorker( acting, finish );
     r->data( data );
@@ -26,7 +27,9 @@ AsyncWorker::AsyncWorker( callback_t acting , callback_t finish )
 void AsyncWorker::start()
 {
     this->worker.data = this;
-    uv_queue_work( uv_default_loop() , &this->worker , AsyncWorker::uv_process_work_callback , AsyncWorker::uv_process_after_work_callback );
+    uv_queue_work( uv_default_loop() , &this->worker ,
+                   AsyncWorker::uv_process_work_callback , 
+                   AsyncWorker::uv_process_after_work_callback );
 }
 
 void AsyncWorker::uv_process_work_callback( uv_work_t * req )
