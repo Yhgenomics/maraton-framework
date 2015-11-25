@@ -29,7 +29,7 @@ public:
     };
     void* result( )
     {
-        return this->result_;
+        return this->result_;   
     }
 
 private:
