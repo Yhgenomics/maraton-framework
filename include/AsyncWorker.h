@@ -23,6 +23,15 @@ public:
     void data( void* value ) { this->data_ = value; };
     void* data() { return this->data_; };
 
+    void result( void* value )
+    {
+        this->result_ = value;
+    };
+    void* result( )
+    {
+        return this->result_;
+    }
+
 private:
 
     AsyncWorker( callback_t acting, callback_t finish );
@@ -30,6 +39,7 @@ private:
     void start();
 
     void* data_;
+    void* result_;
     uv_work_t worker;
     callback_t acting_callback_;
     callback_t finish_callback_;
